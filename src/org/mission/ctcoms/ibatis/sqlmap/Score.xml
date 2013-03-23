@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Score">
+    <typeAlias alias="score" type="org.mission.ctcoms.domain.Score"/>
+    <resultMap class="score" id="scoMap">
+        <result property="id" column="ID"/>
+        <result property="stuNumber" column="S_NUMBER"/>
+        <result property="stuName" column="S_NAME"/>
+        <result property="exNumber" column="EX_NUMBER"/>
+        <result property="chinese" column="CHINESE"/>
+        <result property="maths" column="MATHS"/>
+        <result property="english" column="ENGLISH"/>
+        <result property="biology" column="BIOLOGY"/>
+        <result property="geogrophy" column=",GEOGROPHY"/>
+        <result property="chemistry" column="CHEMISTRY"/>
+        <result property="politics" column="POLITICS"/>
+        <result property="physics" column="PHYSICS"/>
+        <result property="history" column="HISTORY"/>
+        <result property="arts" column="ARTS"/>
+        <result property="science" column="SCIENCE"/>
+        <result property="exDes" column="EX_DES"/>
+        <result property="classRank" column="CLASS_RANK"/>
+        <result property="gradeRank" column="GRADE_RANK"/>
+    </resultMap>
+
+    <insert id="saveScore" parameterClass="score">
+        insert into score (S_NUMBER,EX_NUMBER,S_NAME,CHINESE,MATHS,ENGLISH,BIOLOGY,GEOGROPHY,CHEMISTRY,POLITICS,PHYSICS,HISTORY,ARTS,SCIENCE,EX_DES,CLASS_RANK,GRADE_RANK)
+        value #stuNumber#,#exNumber#,#stuName#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#classRank#,#gradeRank#)
+    </insert>
+
+    <update id="updateScore" parameterClass="score">
+         UPDATE score
+         SET
+              S_NAME=#stuName#
+              S_NUMBER = #stuNumber#,
+              EX_NUMBER = #exNumber#,
+              CHINESE = #chinese#,
+              MATHS = #maths#,
+              ENGLISH = #english#,
+              BIOLOGY = #biology#,
+              GEOGROPHY = #geogrophy#,
+              CHEMISTRY = #chemistry#,
+              POLITICS = #politics#,
+              PHYSICS = #physics#,
+              HISTORY = #history#,
+              ARTS = #arts#,
+              SCIENCE = #science#,
+              EX_DES = #exDes#,
+              CLASS_RANK = #classRank#,
+              GRADE_RANK = #gradeRank#
+         WHERE ID = #id#
+--          and  EX_NUMBER = #exNumber# and EX_DES = #exDes#
+    </update>
+
+    <select id="findScore" parameterClass="String">
+       select * from score where S_NUMBER = #stuNumber#
+    </select>
+
+    <select id="getSameScore" parameterClass="score">
+        select * from score where  EX_NUMBER = #exNumber# and EX_DES = #exDes#
+    </select>
+
+</sqlMap>

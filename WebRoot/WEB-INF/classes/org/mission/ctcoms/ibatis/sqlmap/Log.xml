@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Log">
+	<typeAlias alias="log" type="org.mission.ctcoms.domain.Log" />
+	<resultMap class="log" id="logMap">
+		<result property="id" column="ID" />
+		<result property="account" column="ACCOUNT" />
+		<result property="userId" column="USER_ID" />
+		<result property="logTime" column="LOG_TIME" />
+		<result property="logType" column="LOG_TYPE" />
+	</resultMap>
+	<insert id="saveLog" parameterClass="log">
+		INSERT INTO ZY_SYS_LOG
+		(ID,ACCOUNT,USER_ID,LOG_TIME,LOG_TYPE,LOGIN_IP,LOGIN_MAC)
+		VALUES
+		(#id#,#account#,#userId#,#logTime#,#logType#,#loginIp#,#loginMac#)
+	</insert>
+	
+</sqlMap>

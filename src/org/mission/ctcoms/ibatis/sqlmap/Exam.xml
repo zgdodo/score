@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Exam">
+    <typeAlias alias="exam" type="org.mission.ctcoms.domain.Exam"/>
+    <resultMap class="exam" id="exMap">
+        <result property="examId" column="EXAMID"/>
+        <result property="subject" column="SUBJECT"/>
+        <result property="exTime" column="EX_TIME"/>
+        <result property="exDes" column="EX_DES"/>
+    </resultMap>
+
+    <insert id="saveExam" parameterClass="exam">
+        insert into exam (SUBJECT,EX_TIME,EX_DES) value (#subject#,#exTime#,#exDes#)
+    </insert>
+
+    <select id="findExamIdForDes" parameterClass="String">
+         select id from exam where EX_DES= #exDes#
+     </select>
+
+
+
+</sqlMap>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+     
+     <bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://192.168.73.128:3306/score?characterEncoding=utf-8</value>
+		</property>
+		<property name="username">
+			<value>mysql</value>
+		</property>
+		<property name="password">
+			<value>mysql</value>
+		</property>
+	</bean>
+	<aop:config proxy-target-class="true">
+		<aop:advisor
+			pointcut="execution(* org.mission.ctcoms.business.storage.*.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+	<!--
+		the transactional advice (what 'happens'; see the <aop:advisor/> bean
+		below)
+	-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- all methods starting with 'get' are read-only -->
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="search*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- end::transaction  -->
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"
+			value="classpath:config/sql-map-config.xml" />
+		<property name="mappingLocations"
+			value="classpath*:/org/mission/ctcoms/ibatis/*/*.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 抽象的Dao -->
+	<bean id="baseIbatisDAO" abstract="true">
+		<property name="sqlMapClient">
+			<ref local="sqlMapClient" />
+		</property>
+	</bean>
+</beans>

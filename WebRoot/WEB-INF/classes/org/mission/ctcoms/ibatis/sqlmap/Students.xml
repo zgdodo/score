@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+        PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Students">
+       <typeAlias alias="students" type="org.mission.ctcoms.domain.Students"/>
+    <resultMap class="students" id="stuMap">
+        <result property="id" column="ID"/>
+        <result property="stuNumber" column="S_NAME"/>
+        <result property="stuNumber" column="S_NUMBER"/>
+        <result property="sClass" column="S_CLASS"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="sGrade" column="S_GRADE"/>
+
+    </resultMap>
+
+     <select id="getPassWordBySNumber" parameterClass="java.lang.String" resultClass="java.lang.String">
+         select password from students  where s_number =#value#
+     </select>
+
+    <select id="getStuInfoBySNumber" parameterClass="java.lang.String" resultClass="students">
+         select * from students where s_number =#value#
+    </select>
+</sqlMap>
