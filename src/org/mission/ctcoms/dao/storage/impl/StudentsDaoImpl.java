@@ -18,7 +18,7 @@ public class StudentsDaoImpl extends BaseIbaitsDAO implements IStudentsDao {
     @Override
     public Students getStuInfoBySNumber(String s_number) {
         List<Students> stu = loadList("Students.getStuInfoBySNumber", s_number);
-        if (stu != null || stu.size() > 0)
+        if (stu != null && stu.size() > 0)
             return stu.get(0);
         else
             return null;

@@ -27,6 +27,12 @@ public class LoginAction extends BaseAction {
 
     private String password;
 
+    private String resp;
+
+    public String getResp() {
+        return resp;
+    }
+
     public String getStuNumber() {
         return stuNumber;
     }
@@ -52,6 +58,7 @@ public class LoginAction extends BaseAction {
     }
 
     public String stuLogin() throws Exception {
+        String error = "请检查用户名或密码";
         Map<String, Object> map = loginService.loginValid(password, stuNumber);
         boolean valid = (Boolean) map.get("valid");
         Students students = (Students) map.get("stu");

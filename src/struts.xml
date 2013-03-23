@@ -17,7 +17,7 @@
     <package name="struts2" extends="struts-default">
         <action name="stuLogin" method="stuLogin" class="loginAction">
             <result name="success">/scroe/query.jsp</result>
-            <result name="login">/login.jsp</result>
+            <result name="login">/login.html</result>
             <result name= "input">/scroe/admin.jsp</result>
         </action>
     </package>
