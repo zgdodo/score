@@ -6,6 +6,8 @@ import org.mission.ctcoms.business.storage.ILoginService;
 import org.mission.ctcoms.domain.Students;
 import org.mission.ctcoms.web.code.BaseAction;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,10 +29,14 @@ public class LoginAction extends BaseAction {
 
     private String password;
 
-    private String resp;
+    private Map<String, String> resp;
 
-    public String getResp() {
+    public Map<String, String> getResp() {
         return resp;
+    }
+
+    public void setResp(Map<String, String> resp) {
+        this.resp = resp;
     }
 
     public String getStuNumber() {
@@ -58,25 +64,38 @@ public class LoginAction extends BaseAction {
     }
 
     public String stuLogin() throws Exception {
-        String error = "请检查用户名或密码";
+        String error = "信息错误，请检查用户名或密码";
+        Map<String, String> result = new HashMap<String, String>();
         Map<String, Object> map = loginService.loginValid(password, stuNumber);
         boolean valid = (Boolean) map.get("valid");
         Students students = (Students) map.get("stu");
-        if (students == null)
-            return LOGIN;
-        if (!stuNumber.equals("0001")) {
-            if (!valid)
-                return LOGIN;
-            else
-                getSession().setAttribute("stu", students);     //end if valid
-            return SUCCESS;
-        } else {
-            if (!valid)
-                return LOGIN;
+        if (students == null) {
+            result.put("url", "/login.jsp");
+            result.put("error", error);
+            this.setResp(result);
 
-                getSession().setAttribute("stu", students);     //end if valid
-            return INPUT;
+        }
+        if (!stuNumber.equals("0001")) {
+            if (!valid) {
+                result.put("url", "/login.jsp");
+                result.put("error", error);
+                this.setResp(result);
+            } else {
+                getSession().setAttribute("stu", students);
+                result.put("url", "/scroe/query.jsp");
+                this.setResp(result);
+            }      //end if valid
+        } else {
+            if (!valid) {
+                result.put("url", "/login.jsp");
+                result.put("error", error);
+                this.setResp(result);
+            }
+            getSession().setAttribute("stu", students);     //end if valid
+            result.put("url", "/scroe/admin.jsp");
+            this.setResp(result);
         }   //end if equal
+        return SUCCESS;
     }
 
 }

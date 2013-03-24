@@ -22,8 +22,7 @@
 
         $(document).ready(function () {
             $("#importForm").ajaxForm({
-                dataType:'text',
-                type:'post',
+                url:"importExcel.do",
                 beforeSubmit:check,
                 success:function(data) {
                     alert(data);
@@ -59,7 +58,7 @@
     </style>
 </head>
 <body>
-<form action="" method="post" id="importForm"   enctype="MULTIPART/FORM-DATA" >
+<form method="post" id="importForm"  enctype="MULTIPART/FORM-DATA" >
     <div id="tabs">
 
         <ul>

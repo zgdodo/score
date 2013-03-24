@@ -14,11 +14,14 @@
             </result>
         </action>
     </package>
-    <package name="struts2" extends="struts-default">
+    <package name="struts2" extends="json-default">
         <action name="stuLogin" method="stuLogin" class="loginAction">
-            <result name="success">/scroe/query.jsp</result>
-            <result name="login">/login.html</result>
-            <result name= "input">/scroe/admin.jsp</result>
+            <!--<result name="success">/scroe/query.jsp</result>-->
+            <!--<result name="login">/login.jsp?resp={resp}</result>-->
+            <!--<result name= "input">/scroe/admin.jsp</result>-->
+            <result type="json">
+                <param name="root">resp</param>
+            </result>
         </action>
     </package>
     <package name="json-import" extends="json-default">
@@ -34,4 +37,5 @@
     -->
     <constant name="struts.action.extension" value="do"/>
     <constant name="struts.devMode" value="true"/>
+    <constant name="struts.multipart.maxSize" value="50000000" />
 </struts>
