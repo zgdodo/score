@@ -43,6 +43,7 @@ public class ScoreServiceImpl implements IScoreService {
             } catch (Exception e) {
                 errStu++;
                 errList.add(score.getExNumber());
+                e.printStackTrace();
             }
         }
         result.put("updateStu",updateStu);

@@ -41,7 +41,7 @@ public class ImportAction extends BaseAction {
     }
 
     public String importExcel() throws Exception {
-        importResult.clear();
+//        importResult.clear();
         ImportExcel<Score> scores = new ImportExcel(Score.class);
         List<Score> result = (ArrayList) scores.importExcel(attachment);
         importResult = scoreService.saveScoreBatch(result);

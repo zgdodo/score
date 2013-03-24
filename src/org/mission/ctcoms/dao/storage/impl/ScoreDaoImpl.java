@@ -80,6 +80,8 @@ public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
 
     @Override
     public int getRecordCount(Score score) throws Exception {
-        return loadRecordCount("Score.getSameScore",score);  //To change body of implemented methods use File | Settings | File Templates.
+        int i;
+        i= loadList("Score.getSameScore",score).size();
+        return i;
     }
 }
