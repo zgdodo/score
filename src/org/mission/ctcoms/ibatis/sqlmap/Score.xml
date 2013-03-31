@@ -27,7 +27,7 @@
 
     <insert id="saveScore" parameterClass="score">
         insert into score (S_NUMBER,EX_NUMBER,S_NAME,CHINESE,MATHS,ENGLISH,BIOLOGY,GEOGROPHY,CHEMISTRY,POLITICS,PHYSICS,HISTORY,ARTS,SCIENCE,EX_DES,CLASS_RANK,GRADE_RANK)
-        value #stuNumber#,#exNumber#,#stuName#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#classRank#,#gradeRank#)
+        value (#stuNumber#,#exNumber#,#stuName#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#exDes#,#classRank#,#gradeRank#)
     </insert>
 
     <update id="updateScore" parameterClass="score">
@@ -58,7 +58,7 @@
        select * from score where S_NUMBER = #stuNumber#
     </select>
 
-    <select id="getSameScore" parameterClass="score">
+    <select id="getSameScore" parameterClass="score" resultMap="scoMap">
         select * from score where  EX_NUMBER = #exNumber# and EX_DES = #exDes#
     </select>
 

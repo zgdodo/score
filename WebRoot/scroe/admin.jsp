@@ -15,23 +15,23 @@
     <script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="/js/jquery.form.js"></script>
     <script>
-        $(function () {
-            $("#tabs").tabs();
-        });
-
 
         $(document).ready(function () {
+            $("#tabs").tabs();
+            $("fileSub").button();
             $("#importForm").ajaxForm({
                 url:"importExcel.do",
                 beforeSubmit:check,
                 success:function(data) {
-                    alert(data);
+                    alert("本次导入excel总条数："+data.allSto+",其中更新："+
+                    data.updateStu+"条,录入："+data.saveStu+"条,错误："+
+                    data.errStu+ "条");
                 }
             });
             function check () {
                 var filePath = $("input[name='attachment']").val();
                 if (filePath == undefined || $.trim(filePath) == "") {
-                    alert("请上传文件");
+                    alert("请选择上传文件");
                     return false;
                 }
                 var extStart = filePath.lastIndexOf(".");
@@ -73,7 +73,8 @@
                     </td>
 
                     <td>
-                        <input type="submit" name="fileSub" id="fileSub" value="导入"/>
+                        <%--<input type="button" name="fileSub" id="fileSub" value="导入"/>--%>
+                         <button id="fileSub">导入</button>
                     </td>
 
                 </tr>

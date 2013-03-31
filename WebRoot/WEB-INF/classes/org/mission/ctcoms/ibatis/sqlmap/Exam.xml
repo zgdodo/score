@@ -19,26 +19,4 @@
          select id from exam where EX_DES= #exDes#
      </select>
 
-    <update id="updateScore" parameterClass="score">
-         UPDATE score
-         SET
-              s_number = #s_number#,
-              ex_number = #ex_number#,
-              Chinese = #Chinese#,
-              maths = #maths#,
-              English = #English#,
-              biology = #biology#,
-              geogrophy = #geogrophy#,
-              chemistry = #chemistry#,
-              politics = #politics#,
-              physics = #physics#,
-              history = #history#,
-              arts = #arts#,
-              science = #science#,
-              ex_des = #ex_des#,
-              class_rank = #class_rank#,
-              grade_rank = #grade_rank#
-         WHERE id = #id# ;
-    </update>
-
 </sqlMap>

@@ -26,7 +26,7 @@ public interface IScoreService {
      * Map<errStu,Integer>; 错误总数
      * Map<errList,List>;   具体错误学生考号
      */
-    Map<String,Object> saveScoreBatch(List<Score> list);
+    Map<String,Object> saveScoreBatch(List<Score> list) throws Exception;
 
     /**
      *      根据学号查询成绩

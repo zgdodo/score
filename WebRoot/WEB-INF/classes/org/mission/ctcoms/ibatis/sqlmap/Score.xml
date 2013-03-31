@@ -12,7 +12,7 @@
         <result property="maths" column="MATHS" />
         <result property="english" column="ENGLISH" />
         <result property="biology" column="BIOLOGY" />
-        <result property="geogrophy" column=",GEOGROPHY" />
+        <result property="geogrophy" column="GEOGROPHY" />
         <result property="chemistry" column="CHEMISTRY" />
         <result property="politics" column="POLITICS" />
         <result property="physics" column="PHYSICS" />
@@ -26,7 +26,7 @@
 
     <insert id="saveScore" parameterClass="score">
         insert into score (S_NUMBER,EX_NUMBER,CHINESE,MATHS,ENGLISH,BIOLOGY,GEOGROPHY,CHEMISTRY,POLITICS,PHYSICS,HISTORY,ARTS,SCIENCE,EX_DES,CLASS_RANK,GRADE_RANK)
-        value #stuNumber#,#exNumber#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#classRank#,#gradeRank#)
+        value (#stuNumber#,#exNumber#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#exDes#,#classRank#,#gradeRank#)
     </insert>
 
     <update id="updateScore" parameterClass="score">
@@ -36,7 +36,7 @@
               EX_NUMBER = #exNumber#,
               CHINESE = #chinese#,
               MATHS = #maths#,
-              ENGLISH = #English#,
+              ENGLISH = #english#,
               BIOLOGY = #biology#,
               GEOGROPHY = #geogrophy#,
               CHEMISTRY = #chemistry#,
@@ -51,12 +51,12 @@
          WHERE ID = #id# and  EX_NUMBER = #exNumber# and EX_DES = #exDes#
     </update>
 
-    <select id="findScore" parameterClass="String">
+    <select id="findScore" parameterClass="String" resultMap="scoMap">
        select * from score where S_NUMBER = #stuNumber#
     </select>
 
-    <select id="getSameScore" parameterClass="score">
-        select * from score where  EX_NUMBER = #exNumber# and EX_DES = #exDes#
+    <select id="getSameScore" parameterClass="score" resultMap="scoMap">
+        select * from score where  EX_NUMBER = '$exNumber$' and EX_DES ='$exDes$'
     </select>
 
 </sqlMap>

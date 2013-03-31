@@ -140,8 +140,8 @@ public class ImportExcel<T> {
                                                     cell.getNumericCellValue())
                                                     .toString();
                                         } else {// 纯数字
-                                            value = String.valueOf(cell
-                                                    .getNumericCellValue());
+                                            Double dValue = cell.getNumericCellValue();
+                                            value = String.valueOf(dValue.intValue());
                                         }
 //                                        if(value.matches("^((\\d+\\.?\\d+)[Ee]{1}(\\d+)){1}quot;)){
 //                                            DecimalFormat df = new DecimalFormat("#.##");
