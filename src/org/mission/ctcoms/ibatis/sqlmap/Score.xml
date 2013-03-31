@@ -13,7 +13,7 @@
         <result property="maths" column="MATHS"/>
         <result property="english" column="ENGLISH"/>
         <result property="biology" column="BIOLOGY"/>
-        <result property="geogrophy" column=",GEOGROPHY"/>
+        <result property="geogrophy" column="GEOGROPHY"/>
         <result property="chemistry" column="CHEMISTRY"/>
         <result property="politics" column="POLITICS"/>
         <result property="physics" column="PHYSICS"/>
