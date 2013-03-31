@@ -33,11 +33,17 @@ public class ScoreServiceImpl implements IScoreService {
         result.put("allSto", allStu);
 //           对比存在相同考试批次的学生更新成绩否则添加成绩
         for (Score score : scores) {
-                List<Score> list = scoreDao.getSameScore(score);
+            List<Score> list = scoreDao.getSameScore(score);
             if (list.size() > 0) {
                 score.setId((list.get(0).getId()));
-                scoreDao.updateScore(score);
-                updateStu++;
+                boolean flag = scoreDao.updateScore(score);
+                if (flag) {
+                    updateStu++;
+                } else {
+                    errStu++;
+                    errList.add(score.getExNumber());
+                }
+
             } else {
                 boolean flag = scoreDao.saveScore(score);
                 if (flag)

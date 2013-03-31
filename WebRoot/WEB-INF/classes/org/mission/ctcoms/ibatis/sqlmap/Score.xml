@@ -48,7 +48,7 @@
               EX_DES = #exDes#,
               CLASS_RANK = #classRank#,
               GRADE_RANK = #gradeRank#
-         WHERE ID = #id# and  EX_NUMBER = #exNumber# and EX_DES = #exDes#
+         WHERE ID = #id#
     </update>
 
     <select id="findScore" parameterClass="String" resultMap="scoMap">

@@ -33,7 +33,6 @@
     <update id="updateScore" parameterClass="score">
          UPDATE score
          SET
-              S_NAME=#stuName#
               S_NUMBER = #stuNumber#,
               EX_NUMBER = #exNumber#,
               CHINESE = #chinese#,
@@ -51,7 +50,6 @@
               CLASS_RANK = #classRank#,
               GRADE_RANK = #gradeRank#
          WHERE ID = #id#
---          and  EX_NUMBER = #exNumber# and EX_DES = #exDes#
     </update>
 
     <select id="findScore" parameterClass="String">
