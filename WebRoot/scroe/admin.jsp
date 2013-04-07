@@ -20,15 +20,15 @@
             $("#tabs").tabs();
             $("fileSub").button();
             $("#importForm").ajaxForm({
-                url:"importExcel.do",
-                beforeSubmit:check,
-                success:function(data) {
-                    alert("本次导入excel总条数："+data.allSto+",其中更新："+
-                    data.updateStu+"条,录入："+data.saveStu+"条,错误："+
-                    data.errStu+ "条");
+                url: "importExcel.do",
+                beforeSubmit: check,
+                success: function (data) {
+                    alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
+                            data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
+                            data.errStu + "条");
                 }
             });
-            function check () {
+            function check() {
                 var filePath = $("input[name='attachment']").val();
                 if (filePath == undefined || $.trim(filePath) == "") {
                     alert("请选择上传文件");
@@ -58,14 +58,15 @@
     </style>
 </head>
 <body>
-<form method="post" id="importForm"  enctype="MULTIPART/FORM-DATA" >
-    <div id="tabs">
+<div id="tabs">
 
-        <ul>
-            <li><a href="#tabs-1">导入 excel</a></li>
-            <li><a href="#tabs-2">成绩查询</a></li>
-        </ul>
-        <div id="tabs-1">
+
+    <ul>
+        <li><a href="#tabs-1">导入 excel</a></li>
+        <li><a href="#tabs-2">成绩查询</a></li>
+    </ul>
+    <div id="tabs-1">
+        <form method="post" id="importForm" enctype="MULTIPART/FORM-DATA">
             <table>
                 <tr>
                     <td>
@@ -74,17 +75,35 @@
 
                     <td>
                         <%--<input type="button" name="fileSub" id="fileSub" value="导入"/>--%>
-                         <button id="fileSub">导入</button>
+                        <button id="fileSub">导入</button>
                     </td>
 
                 </tr>
 
             </table>
-        </div>
-        <div id="tabs-2">
-            loading.....
-        </div>
+
+        </form>
     </div>
-</form>
+    <div id="tabs-2">
+        <form id="queryFrom" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" name="stuNumber" id="stuNumber"/>
+                    </td>
+
+                    <td>
+                        <button id="scoreQuery">查询</button>
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </form>
+
+    </div>
+</div>
+
 </body>
 </html>
