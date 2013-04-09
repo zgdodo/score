@@ -55,10 +55,10 @@
             height: 255,
             colNames: ['考号', '学号', '姓名', '班级', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
             colModel: [
-                {name: 's_number', index: 's_number'},
-                {name: 'ex_number', index: 'ex_number'},
-                {name: 'Chinese', index: 'Chinese'},
-                {name: 'English', index: 'English'},
+                {name: 'stuNumber', index: 'stuNumber'},
+                {name: 'exNumber', index: 'exNumber'},
+                {name: 'Chinese', index: 'chinese'},
+                {name: 'English', index: 'english'},
                 {name: 'biology', index: 'biology'},
                 {name: 'geogrophy', index: 'geogrophy'},
                 {name: 'chemistry', index: 'chemistry'},
@@ -70,7 +70,7 @@
                 {name: 'ex_des', index: 'ex_des'},
                 {name: 'class_rank', index: 'class_rank'},
                 {name: 'grade_rank', index: 'grade_rank'},
-                {name: 's_name', index: 's_name'}
+                {name: 'stuName', index: 'stuName'}
             ],
             rowNum: 10,
             rowList: [20, 30, 50],

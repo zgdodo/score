@@ -53,7 +53,12 @@
     </update>
 
     <select id="findScore" parameterClass="String">
-       select * from score where S_NUMBER = #stuNumber#
+       select * from score
+       <dynamic prepend="where">
+           <isNotNull prepend="S_NUMBER">
+               S_NUMBER = #stuNumber#
+           </isNotNull>
+       </dynamic>
     </select>
 
     <select id="getSameScore" parameterClass="score" resultMap="scoMap">

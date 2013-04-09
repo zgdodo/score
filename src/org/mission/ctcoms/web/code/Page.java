@@ -26,7 +26,7 @@ import java.util.List;
         public static final String DESC = "desc";
 
         public static final int MIN_PAGESIZE = 1;                  // 每页显示的最少记录数
-        public static final int MAX_PAGESIZE = 200;                  // 每页显示的最大记录数
+        public static final int MAX_PAGESIZE = 50;                  // 每页显示的最大记录数
 
         // 分页参数
         protected int curPageNo = 1;                                    // 当前所在页码（在第几页）

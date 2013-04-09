@@ -1,5 +1,9 @@
 package org.mission.ctcoms.web.code;
 
+
+
+import org.mission.ctcoms.domain.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +43,7 @@ public abstract class JsonBaseAction extends BaseAction{
     /**
      * 保存实际的数据
      */
-    protected List<Map<String,Object>> dataRows = new ArrayList<Map<String,Object>>();
+    protected List<Score> dataRows = new ArrayList<Score>();
 
     public JsonBaseAction() {
         super ();
@@ -82,9 +86,9 @@ public abstract class JsonBaseAction extends BaseAction{
      * List中。
      * @return
      */
-    public abstract List<Map<String, Object>> getDataRows();
+    public abstract List<Score> getDataRows();
 
-    public void setDataRows(List<Map<String, Object>> dataRows) {
+    public void setDataRows(List<Score> dataRows) {
         this .dataRows = dataRows;
     }
 }

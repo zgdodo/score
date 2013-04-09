@@ -29,5 +29,9 @@
           scope="request">
         <property name="iScoreService" ref="scoreService"/>
     </bean>
+    <bean name="queryAtion" class="org.mission.ctcoms.web.action.storage.QueryAction"
+          scope="request">
+        <property name="iScoreService" ref="scoreService"/>
+    </bean>
 
 </beans>
