@@ -10,10 +10,14 @@
 <head>
     <title>管理页面</title>
 
-    <link href="/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet">
+    <link href="/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet"/>
+    <link href="/style/ui.jqgrid.css" rel="stylesheet"/>
     <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="/js/jquery.form.js"></script>
+    <script src="/js/grid.locale-cn.js" type="text/javascript"></script>
+    <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="/js/scroe.js" type="text/javascript"></script>
     <script>
 
         $(document).ready(function () {
@@ -44,6 +48,51 @@
                 return true;
             }
         });
+
+        $("#queryList").jqGrid({
+            url: 'localset.php',
+            datatype: "json",
+            height: 255,
+            colNames: ['考号', '学号', '姓名', '班级', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
+            colModel: [
+                {name: 's_number', index: 's_number'},
+                {name: 'ex_number', index: 'ex_number'},
+                {name: 'Chinese', index: 'Chinese'},
+                {name: 'English', index: 'English'},
+                {name: 'biology', index: 'biology'},
+                {name: 'geogrophy', index: 'geogrophy'},
+                {name: 'chemistry', index: 'chemistry'},
+                {name: 'politics', index: 'politics'},
+                {name: 'physics', index: 'physics'},
+                {name: 'history', index: 'history'},
+                {name: 'arts', index: 'arts'},
+                {name: 'science', index: 'science'},
+                {name: 'ex_des', index: 'ex_des'},
+                {name: 'class_rank', index: 'class_rank'},
+                {name: 'grade_rank', index: 'grade_rank'},
+                {name: 's_name', index: 's_name'}
+            ],
+            rowNum: 10,
+            rowList: [20, 30, 50],
+            jsonReader: {
+                root: "dataRows",                // 数据行（默认为：rows）
+                page: "curPage",            // 当前页
+                total: "totalPages",    // 总页数
+                records: "totalRecords",    // 总记录数
+                id: "id",
+                repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
+            },
+            prmNames: {
+                rows: "page.pageSize",
+                page: "page.curPageNo",
+                sort: "page.orderBy",
+                order: "page.order" },
+            pager: "#pageGrid",
+            caption: "学生成绩列表"
+        });
+        $("#queryList").jqGrid('navGrid', '#pageGrid',
+                {del: false, add: false, edit: false},
+                {}, {}, {}, {multipleSearch: true});
     </script>
     <style>
         body {
@@ -85,22 +134,9 @@
         </form>
     </div>
     <div id="tabs-2">
-        <form id="queryFrom" method="post">
-            <table>
-                <tr>
-                    <td>
-                        <input type="text" name="stuNumber" id="stuNumber"/>
-                    </td>
 
-                    <td>
-                        <button id="scoreQuery">查询</button>
-                    </td>
-
-                </tr>
-
-            </table>
-
-        </form>
+        <table id="queryList"></table>
+        <div id="pageGrid"></div>
 
     </div>
 </div>
