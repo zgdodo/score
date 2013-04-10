@@ -20,14 +20,15 @@
         <result property="history" column="HISTORY"/>
         <result property="arts" column="ARTS"/>
         <result property="science" column="SCIENCE"/>
+        <result property="totalScore" column="TOTAL_SCORE"/>
         <result property="exDes" column="EX_DES"/>
         <result property="classRank" column="CLASS_RANK"/>
         <result property="gradeRank" column="GRADE_RANK"/>
     </resultMap>
 
     <insert id="saveScore" parameterClass="score">
-        insert into score (S_NUMBER,EX_NUMBER,S_NAME,CHINESE,MATHS,ENGLISH,BIOLOGY,GEOGROPHY,CHEMISTRY,POLITICS,PHYSICS,HISTORY,ARTS,SCIENCE,EX_DES,CLASS_RANK,GRADE_RANK)
-        value (#stuNumber#,#exNumber#,#stuName#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#exDes#,#classRank#,#gradeRank#)
+        insert into score (S_NUMBER,EX_NUMBER,S_NAME,CHINESE,MATHS,ENGLISH,BIOLOGY,GEOGROPHY,CHEMISTRY,POLITICS,PHYSICS,HISTORY,ARTS,SCIENCE,TOTAL_SCORE,EX_DES,CLASS_RANK,GRADE_RANK)
+        value (#stuNumber#,#exNumber#,#stuName#,#chinese#,#maths#,#english#,#biology#,#geogrophy#,#chemistry#,#politics#,#physics#,#history#,#arts#,#science#,#totalScore#,#exDes#,#classRank#,#gradeRank#)
     </insert>
 
     <update id="updateScore" parameterClass="score">
@@ -47,6 +48,7 @@
               ARTS = #arts#,
               SCIENCE = #science#,
               EX_DES = #exDes#,
+              TOTAL_SCORE= #totalScore#,
               CLASS_RANK = #classRank#,
               GRADE_RANK = #gradeRank#
          WHERE ID = #id#

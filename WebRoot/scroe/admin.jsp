@@ -22,7 +22,6 @@
 
         $(document).ready(function () {
             $("#tabs").tabs();
-            $("fileSub").button();
             $("#importForm").ajaxForm({
                 url: "importExcel.do",
                 beforeSubmit: check,
@@ -47,52 +46,58 @@
                 }
                 return true;
             }
+
+            $("#queryList").jqGrid({
+                url: 'queryAction.do',
+                datatype: "json",
+                height: 255,
+                colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
+                colModel: [
+                    {name: 'stuNumber', index: 'stuNumber', width:'100'},
+                    {name: 'exNumber', index: 'exNumber', width:'100'},
+                    {name: 'stuName', index: 'stuName', width:'100'},
+                    {name: 'Chinese', index: 'chinese', width:'50'},
+                    {name: 'maths', index: 'maths' ,width:'50'},
+                    {name: 'English', index: 'english',width:'50'},
+                    {name: 'biology', index: 'biology',width:'50'},
+                    {name: 'geogrophy', index: 'geogrophy',width:'50'},
+                    {name: 'chemistry', index: 'chemistry',width:'50'},
+                    {name: 'politics', index: 'politics',width:'50'},
+                    {name: 'physics', index: 'physics',width:'50'},
+                    {name: 'history', index: 'history',width:'50'},
+                    {name: 'arts', index: 'arts',width:'50'},
+                    {name: 'science', index: 'science',width:'50'},
+                    {name: 'totalScore', index: 'totalScore',width:'50'},
+                    {name: 'classRank', index: 'classRank',width:'50'},
+                    {name: 'gradeRank', index: 'gradeRank',width:'50'},
+                    {name: 'exDes', index: 'exDes',width:'150'}
+
+                ],
+                rowNum: 10,
+                rowList: [20, 30, 50],
+                jsonReader: {
+                    root: "dataRows",                // 数据行（默认为：rows）
+                    page: "curPage",            // 当前页
+                    total: "totalPages",    // 总页数
+                    records: "totalRecords",    // 总记录数
+                    id: "id",
+                    repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
+                },
+                prmNames: {
+                    rows: "page.pageSize",
+                    page: "page.curPageNo",
+                    sort: "page.orderBy",
+                    order: "page.order"
+                },
+                pager: "#pageGrid",
+                caption: "学生成绩列表"
+            });
+            $("#queryList").jqGrid('navGrid', '#pageGrid',
+                    {del: false, add: false, edit: false},
+                    {}, {}, {}, {multipleSearch: true});
         });
 
-        $("#queryList").jqGrid({
-            url: 'localset.php',
-            datatype: "json",
-            height: 255,
-            colNames: ['考号', '学号', '姓名', '班级', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
-            colModel: [
-                {name: 'stuNumber', index: 'stuNumber'},
-                {name: 'exNumber', index: 'exNumber'},
-                {name: 'Chinese', index: 'chinese'},
-                {name: 'English', index: 'english'},
-                {name: 'biology', index: 'biology'},
-                {name: 'geogrophy', index: 'geogrophy'},
-                {name: 'chemistry', index: 'chemistry'},
-                {name: 'politics', index: 'politics'},
-                {name: 'physics', index: 'physics'},
-                {name: 'history', index: 'history'},
-                {name: 'arts', index: 'arts'},
-                {name: 'science', index: 'science'},
-                {name: 'ex_des', index: 'ex_des'},
-                {name: 'class_rank', index: 'class_rank'},
-                {name: 'grade_rank', index: 'grade_rank'},
-                {name: 'stuName', index: 'stuName'}
-            ],
-            rowNum: 10,
-            rowList: [20, 30, 50],
-            jsonReader: {
-                root: "dataRows",                // 数据行（默认为：rows）
-                page: "curPage",            // 当前页
-                total: "totalPages",    // 总页数
-                records: "totalRecords",    // 总记录数
-                id: "id",
-                repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
-            },
-            prmNames: {
-                rows: "page.pageSize",
-                page: "page.curPageNo",
-                sort: "page.orderBy",
-                order: "page.order" },
-            pager: "#pageGrid",
-            caption: "学生成绩列表"
-        });
-        $("#queryList").jqGrid('navGrid', '#pageGrid',
-                {del: false, add: false, edit: false},
-                {}, {}, {}, {multipleSearch: true});
+
     </script>
     <style>
         body {
@@ -123,8 +128,8 @@
                     </td>
 
                     <td>
-                        <%--<input type="button" name="fileSub" id="fileSub" value="导入"/>--%>
-                        <button id="fileSub">导入</button>
+                            <input type="submit" name="fileSub" value="导入" />
+                        <%--<button id="fileSub"></button>--%>
                     </td>
 
                 </tr>

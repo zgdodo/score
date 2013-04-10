@@ -32,9 +32,8 @@
         </action>
     </package>
     <package name="json-query" extends="json-default">
-        <action class="queryAtion" method="importExcel" name="importExcel">
+        <action class="queryAtion"  name="queryAction">
             <result type="json">
-                <param name="root">importResult</param>
             </result>
         </action>
     </package>

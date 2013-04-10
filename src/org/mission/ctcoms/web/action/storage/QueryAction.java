@@ -17,8 +17,14 @@ import java.util.Map;
 public class QueryAction extends JsonBaseAction {
     private IScoreService iScoreService;
 
+
+
+    public void setiScoreService(IScoreService iScoreService) {
+        this.iScoreService = iScoreService;
+    }
+
     public String excute() throws Exception{
-         dataRows= iScoreService.getScoreList();
+         dataRows= iScoreService.getScoreList(null);
         return  SUCCESS;
     }
     @Override

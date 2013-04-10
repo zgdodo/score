@@ -40,12 +40,15 @@ public class Score {
     String arts;
     @ExcelAnnotation(exportName ="理综" )
     String science;
+    @ExcelAnnotation(exportName ="总分" )
+    String totalScore;
     @ExcelAnnotation(exportName ="考试批次" )
     String exDes;
     @ExcelAnnotation(exportName ="班级排名" )
     String classRank;
     @ExcelAnnotation(exportName ="年级排名" )
     String gradeRank;
+
 
     public long getId() {
         return id;
@@ -189,5 +192,13 @@ public class Score {
 
     public void setClassRank(String classRank) {
         this.classRank = classRank;
+    }
+
+    public String getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(String totalScore) {
+        this.totalScore = totalScore;
     }
 }
