@@ -32,7 +32,7 @@
         </action>
     </package>
     <package name="json-query" extends="json-default">
-        <action class="queryAtion"  name="queryAction">
+        <action class="queryAtion" name="queryAction">
             <result type="json">
             </result>
         </action>

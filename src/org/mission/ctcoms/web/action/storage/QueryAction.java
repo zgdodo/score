@@ -23,7 +23,7 @@ public class QueryAction extends JsonBaseAction {
         this.iScoreService = iScoreService;
     }
 
-    public String excute() throws Exception{
+    public String execute() throws Exception{
          dataRows= iScoreService.getScoreList(null);
         return  SUCCESS;
     }

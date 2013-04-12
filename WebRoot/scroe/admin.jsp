@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!doctype html>
 <html>
 <head>
     <title>管理页面</title>
@@ -19,8 +21,9 @@
     <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
     <script src="/js/scroe.js" type="text/javascript"></script>
     <script>
-
+        var t = document.documentElement.clientWidth; //在页面初始化加载的时候，事先取得当前页面的可见区域宽度，留备后用。
         $(document).ready(function () {
+
             $("#tabs").tabs();
             $("#importForm").ajaxForm({
                 url: "importExcel.do",
@@ -50,27 +53,28 @@
             $("#queryList").jqGrid({
                 url: 'queryAction.do',
                 datatype: "json",
-                height: 255,
+                autowidth: false,
+                shrinkToFit: true,
                 colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
                 colModel: [
-                    {name: 'stuNumber', index: 'stuNumber', width:'100'},
-                    {name: 'exNumber', index: 'exNumber', width:'100'},
-                    {name: 'stuName', index: 'stuName', width:'100'},
-                    {name: 'Chinese', index: 'chinese', width:'50'},
-                    {name: 'maths', index: 'maths' ,width:'50'},
-                    {name: 'English', index: 'english',width:'50'},
-                    {name: 'biology', index: 'biology',width:'50'},
-                    {name: 'geogrophy', index: 'geogrophy',width:'50'},
-                    {name: 'chemistry', index: 'chemistry',width:'50'},
-                    {name: 'politics', index: 'politics',width:'50'},
-                    {name: 'physics', index: 'physics',width:'50'},
-                    {name: 'history', index: 'history',width:'50'},
-                    {name: 'arts', index: 'arts',width:'50'},
-                    {name: 'science', index: 'science',width:'50'},
-                    {name: 'totalScore', index: 'totalScore',width:'50'},
-                    {name: 'classRank', index: 'classRank',width:'50'},
-                    {name: 'gradeRank', index: 'gradeRank',width:'50'},
-                    {name: 'exDes', index: 'exDes',width:'150'}
+                    {name: 'stuNumber', index: 'stuNumber'},
+                    {name: 'exNumber', index: 'exNumber'},
+                    {name: 'stuName', index: 'stuName'},
+                    {name: 'Chinese', index: 'chinese'},
+                    {name: 'maths', index: 'maths' },
+                    {name: 'English', index: 'english'},
+                    {name: 'biology', index: 'biology'},
+                    {name: 'geogrophy', index: 'geogrophy'},
+                    {name: 'chemistry', index: 'chemistry'},
+                    {name: 'politics', index: 'politics'},
+                    {name: 'physics', index: 'physics'},
+                    {name: 'history', index: 'history'},
+                    {name: 'arts', index: 'arts'},
+                    {name: 'science', index: 'science'},
+                    {name: 'totalScore', index: 'totalScore'},
+                    {name: 'classRank', index: 'classRank'},
+                    {name: 'gradeRank', index: 'gradeRank'},
+                    {name: 'exDes', index: 'exDes'}
 
                 ],
                 rowNum: 10,
@@ -89,25 +93,62 @@
                     sort: "page.orderBy",
                     order: "page.order"
                 },
-                pager: "#pageGrid",
-                caption: "学生成绩列表"
+
+                pager: "#pageGrid"
+
             });
+
             $("#queryList").jqGrid('navGrid', '#pageGrid',
                     {del: false, add: false, edit: false},
                     {}, {}, {}, {multipleSearch: true});
+
+
+            doResize()
+        });
+        //            自适应宽度
+        //每次窗口大小调整的时候都会自动执行此方法，配合doResize()方法可以动态调整jqGrid的高和宽
+        $(window).resize(function () {
+            if (t != document.documentElement.clientWidth) { //还记得一开始初始化的时候就记录下来的那个t变量吗？
+                t = document.documentElement.clientWidth; //重新给t变量赋值
+                doResize(); //继续调整宽高度
+            }
         });
 
+        function doResize() {
+            var ss = getPageSize();
+            //将jqGrid窗口的宽度设置为ss.WinW-20，高度设置为ss.WinH-93
+            //这里的20和93是真实宽高度的修正值，你可以自己去试一下找到最合适你的那个数值
+            $("#queryList").jqGrid('setGridWidth', ss.WinW - 70)
+        }
+
+        function getPageSize() {
+            var winW, winH;//当前窗口的有效可视宽度和高度
+
+            if (window.innerHeight) { //所有非IE浏览器
+                winW = window.innerWidth;
+                winH = $(window).height();
+            } else if (document.documentElement && document.documentElement.clientHeight) { //IE 6 Strict Mode
+                winW = document.documentElement.clientWidth;
+                winH = document.documentElement.clientHeight;
+            } else if (document.body) { //其他浏览器
+                winW = document.body.clientWidth;
+                winH = document.body.clientHeight;
+            }
+            return {
+                WinW: winW, //真正反馈的宽度
+                WinH: winH //真正反馈的高度
+            };
+        }
+        ;
 
     </script>
     <style>
         body {
             font: 70.5% "Trebuchet MS", sans-serif;
-            margin: 50px;
         }
 
         table {
             font: 90% "Trebuchet MS", sans-serif;
-            margin: 50px;
         }
     </style>
 </head>
@@ -116,8 +157,8 @@
 
 
     <ul>
-        <li><a href="#tabs-1">导入 excel</a></li>
         <li><a href="#tabs-2">成绩查询</a></li>
+        <li><a href="#tabs-1">导入 excel</a></li>
     </ul>
     <div id="tabs-1">
         <form method="post" id="importForm" enctype="MULTIPART/FORM-DATA">
@@ -128,7 +169,7 @@
                     </td>
 
                     <td>
-                            <input type="submit" name="fileSub" value="导入" />
+                        <input type="submit" name="fileSub" value="导入"/>
                         <%--<button id="fileSub"></button>--%>
                     </td>
 
