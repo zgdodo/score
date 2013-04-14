@@ -19,9 +19,9 @@
     <script type="text/javascript" src="/js/jquery.form.js"></script>
     <script src="/js/grid.locale-cn.js" type="text/javascript"></script>
     <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-    <script src="/js/scroe.js" type="text/javascript"></script>
+    <script src="/js/autosize.js" type="text/javascript"></script>
     <script>
-        var t = document.documentElement.clientWidth; //在页面初始化加载的时候，事先取得当前页面的可见区域宽度，留备后用。
+
         $(document).ready(function () {
 
             $("#tabs").tabs();
@@ -57,41 +57,43 @@
                 shrinkToFit: true,
                 colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
                 colModel: [
-                    {name: 'stuNumber', index: 'stuNumber'},
-                    {name: 'exNumber', index: 'exNumber'},
-                    {name: 'stuName', index: 'stuName'},
-                    {name: 'Chinese', index: 'chinese'},
-                    {name: 'maths', index: 'maths' },
-                    {name: 'English', index: 'english'},
-                    {name: 'biology', index: 'biology'},
-                    {name: 'geogrophy', index: 'geogrophy'},
-                    {name: 'chemistry', index: 'chemistry'},
-                    {name: 'politics', index: 'politics'},
-                    {name: 'physics', index: 'physics'},
-                    {name: 'history', index: 'history'},
-                    {name: 'arts', index: 'arts'},
-                    {name: 'science', index: 'science'},
-                    {name: 'totalScore', index: 'totalScore'},
-                    {name: 'classRank', index: 'classRank'},
-                    {name: 'gradeRank', index: 'gradeRank'},
+                    {name: 'stuNumber', index: 'stuNumber', width: '90%'},
+                    {name: 'exNumber', index: 'exNumber', width: '90%'},
+                    {name: 'stuName', index: 'stuName', width: '80%'},
+                    {name: 'chinese', index: 'chinese', width: '60%'},
+                    {name: 'maths', index: 'maths', width: '60%' },
+                    {name: 'english', index: 'english', width: '60%'},
+                    {name: 'biology', index: 'biology', width: '60%'},
+                    {name: 'geogrophy', index: 'geogrophy', width: '60%'},
+                    {name: 'chemistry', index: 'chemistry', width: '60%'},
+                    {name: 'politics', index: 'politics', width: '60%'},
+                    {name: 'physics', index: 'physics', width: '60%'},
+                    {name: 'history', index: 'history', width: '60%'},
+                    {name: 'arts', index: 'arts', width: '60%'},
+                    {name: 'science', index: 'science', width: '60%'},
+                    {name: 'totalScore', index: 'totalScore', width: '60%'},
+                    {name: 'classRank', index: 'classRank', width: '65%'},
+                    {name: 'gradeRank', index: 'gradeRank', width: '65%'},
                     {name: 'exDes', index: 'exDes'}
 
                 ],
-                rowNum: 10,
+                rowNum: 20,       //每页显示数
                 rowList: [20, 30, 50],
                 jsonReader: {
                     root: "dataRows",                // 数据行（默认为：rows）
-                    page: "curPage",            // 当前页
+                    page: "curPage",            // 当前页(服务器端返回)
                     total: "totalPages",    // 总页数
                     records: "totalRecords",    // 总记录数
                     id: "id",
+                    viewrecords: true,
                     repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
                 },
                 prmNames: {
-                    rows: "page.pageSize",
-                    page: "page.curPageNo",
+                    rows: "page.pageSize",       //每页显示数理论上对应rowNum
+                    page: "curPage",      //当前页（客户端提交）
                     sort: "page.orderBy",
-                    order: "page.order"
+                    order: "page.order",
+                    search: "search"
                 },
 
                 pager: "#pageGrid"
@@ -105,42 +107,6 @@
 
             doResize()
         });
-        //            自适应宽度
-        //每次窗口大小调整的时候都会自动执行此方法，配合doResize()方法可以动态调整jqGrid的高和宽
-        $(window).resize(function () {
-            if (t != document.documentElement.clientWidth) { //还记得一开始初始化的时候就记录下来的那个t变量吗？
-                t = document.documentElement.clientWidth; //重新给t变量赋值
-                doResize(); //继续调整宽高度
-            }
-        });
-
-        function doResize() {
-            var ss = getPageSize();
-            //将jqGrid窗口的宽度设置为ss.WinW-20，高度设置为ss.WinH-93
-            //这里的20和93是真实宽高度的修正值，你可以自己去试一下找到最合适你的那个数值
-            $("#queryList").jqGrid('setGridWidth', ss.WinW - 70)
-        }
-
-        function getPageSize() {
-            var winW, winH;//当前窗口的有效可视宽度和高度
-
-            if (window.innerHeight) { //所有非IE浏览器
-                winW = window.innerWidth;
-                winH = $(window).height();
-            } else if (document.documentElement && document.documentElement.clientHeight) { //IE 6 Strict Mode
-                winW = document.documentElement.clientWidth;
-                winH = document.documentElement.clientHeight;
-            } else if (document.body) { //其他浏览器
-                winW = document.body.clientWidth;
-                winH = document.body.clientHeight;
-            }
-            return {
-                WinW: winW, //真正反馈的宽度
-                WinH: winH //真正反馈的高度
-            };
-        }
-        ;
-
     </script>
     <style>
         body {
@@ -148,7 +114,7 @@
         }
 
         table {
-            font: 90% "Trebuchet MS", sans-serif;
+            font: 99% "Trebuchet MS", sans-serif;
         }
     </style>
 </head>

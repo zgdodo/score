@@ -54,17 +54,20 @@
          WHERE ID = #id#
     </update>
 
-    <select id="findScore" parameterClass="String">
-       select * from score
-       <dynamic prepend="where">
-           <isNotNull prepend="S_NUMBER">
-               S_NUMBER = #stuNumber#
-           </isNotNull>
-       </dynamic>
+    <select id="findScore" parameterClass="String" resultMap="scoMap">
+         select * from score where  S_NUMBER = #stuNumber#
     </select>
 
     <select id="getSameScore" parameterClass="score" resultMap="scoMap">
         select * from score where  EX_NUMBER = #exNumber# and EX_DES = #exDes#
+    </select>
+
+    <select id="getScoreList" parameterClass="String" resultMap="scoMap">
+        $sql$
+    </select>
+
+    <select id="getCount" parameterClass="String" resultClass="Integer">
+        $sql$
     </select>
 
 </sqlMap>

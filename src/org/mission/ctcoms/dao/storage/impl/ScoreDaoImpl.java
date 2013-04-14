@@ -46,7 +46,7 @@ public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
      * @throws Exception
      */
     @Override
-    public List<Score> getScoreList(String sNumber) throws Exception {
+    public List<Score> getScoreListByStuNum(String sNumber) throws Exception {
         return loadObject("Score.findScore",sNumber);
     }
 
@@ -84,4 +84,23 @@ public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
         System.out.println(i);
         return i;
     }
+
+    @Override
+    public int getRecordCount(String sql) throws Exception {
+        return (Integer)loadObject("Score.getCount",sql);
+    }
+
+    /**
+     *  因jqgrid的查询太过复杂直接类里生成sql
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Score> getScoreList(int curPage, int pageLimit,String sql) throws Exception {
+        int from = pageLimit*curPage -pageLimit;
+        String sqlString = sql+" limit "+ from +","+ pageLimit;
+        return loadList("Score.getScoreList",sqlString);
+    }
+
+
 }

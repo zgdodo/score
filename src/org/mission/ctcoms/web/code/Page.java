@@ -75,7 +75,7 @@ import java.util.List;
          * 设置当前页的页号,序号从1开始,低于1时自动调整为1.
          * @param curPageNo
          */
-        public void setCurPageNo(final int curPageNo) {
+        public void setCurPageNo(int curPageNo) {
             this.curPageNo = curPageNo;
 
             if (curPageNo < 1) {

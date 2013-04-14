@@ -15,7 +15,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  * @date  2011-8-5 上午09:27:06
  * @description This base class is prepared for subclass to do CRUD easily.
  */
-public class BaseIbaitsDAO extends SqlMapClientDaoSupport {
+public class  BaseIbaitsDAO extends SqlMapClientDaoSupport {
 	private Logger log4j = Logger.getLogger(BaseIbaitsDAO.class);
 
 	/**

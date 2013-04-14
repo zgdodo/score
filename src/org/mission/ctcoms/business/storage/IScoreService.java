@@ -30,10 +30,10 @@ public interface IScoreService {
 
     /**
      *      根据学号查询成绩
-     * @param sNumber
+
      * @return
      */
-    List getScoreList(String sNumber) throws Exception;
+    Map<String ,Object> getScoreList(int curPage,int pageLimit) throws Exception;
 
 
 

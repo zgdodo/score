@@ -62,7 +62,15 @@ public class ScoreServiceImpl implements IScoreService {
     }
 
     @Override
-    public List getScoreList(String sNumber) throws Exception {
-        return scoreDao.getScoreList(sNumber);
+        public Map<String,Object> getScoreList(int curPage,int pageLimit) throws Exception {
+        Map<String,Object> map = new HashMap<String, Object>();
+        String sqlCount = "select count(1) from score";
+        String sql = "select * from score";
+        int totalSize = scoreDao.getRecordCount(sqlCount);
+        List<Score> sList = scoreDao.getScoreList(curPage,pageLimit,sql);
+
+        map.put("result" ,sList);
+        map.put("totalSize",totalSize);
+        return map;
     }
 }
