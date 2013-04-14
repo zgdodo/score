@@ -87,7 +87,7 @@ public abstract class JsonBaseAction<T> extends BaseAction {
 
     boolean search;
 
-    Map<String ,Object> filters;
+    protected String filters;
 
     int nd ;
 
@@ -160,11 +160,11 @@ public abstract class JsonBaseAction<T> extends BaseAction {
         this.dataRows = dataRows;
     }
 
-    public Map<String, Object> getFilters() {
+    public String getFilters() {
         return filters;
     }
 
-    public void setFilters(Map<String, Object> filters) {
+    public void setFilters(String filters) {
         this.filters = filters;
     }
 }
