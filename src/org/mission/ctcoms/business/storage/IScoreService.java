@@ -1,6 +1,7 @@
 package org.mission.ctcoms.business.storage;
 
 import org.mission.ctcoms.domain.Score;
+import org.mission.ctcoms.web.code.JqGridSearchTo;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,9 @@ public interface IScoreService {
 
      * @return
      */
-    Map<String ,Object> getScoreList(int curPage,int pageLimit) throws Exception;
+    Map<String ,Object> getScoreList(int curPage,int pageLimit,JqGridSearchTo jqGridSearchTo) throws Exception;
+
+//    Map<String ,Object> getScoreList(int curPage,int pageLimit) throws Exception ;
 
 
 

@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.mission.ctcoms.business.storage.IScoreService;
 import org.mission.ctcoms.domain.Score;
 import org.mission.ctcoms.web.code.JqGridSearchDetailTo;
+import org.mission.ctcoms.web.code.JqGridSearchTo;
 import org.mission.ctcoms.web.code.JsonBaseAction;
 
 
@@ -29,30 +30,19 @@ public class QueryAction extends JsonBaseAction<Score> {
     }
 
     public String execute() throws Exception {
-        JqGridSearchDetailTo to;
-        if(isSearch()&& filters!=null){
+        JqGridSearchTo jqGridSearchTo = null;
+        if (isSearch() && filters != null) {
             JSONObject filt = JSONObject.fromObject(filters);
-            List<Map> list =(List)filt.get("rules");
-            JSONArray array = JSONArray.fromObject(jsonString);
-            Object[] obj = new Object[array.size()];
-            for(int i = 0; i < array.size(); i++){
-                JSONObject jsonObject = array.getJSONObject(i);
-                obj[i] = JSONObject.toBean(jsonObject, clazz);
-            }
-            for(Map m :list){
-               m.put("rules", JqGridSearchDetailTo.class);
-               to = (JqGridSearchDetailTo)JSONObject.toBean(filt, JqGridSearchDetailTo.class, m);
-           }
-
-//            Map m = new HashMap();
-
-            log4j.info(to);
+            Map m = new HashMap();
+            m.put("rules", JqGridSearchDetailTo.class);
+            jqGridSearchTo = (JqGridSearchTo) JSONObject.toBean(filt, JqGridSearchTo.class, m);
+            log4j.info(jqGridSearchTo);
         }
 
-       Map<String ,Object> map = iScoreService.getScoreList(curPage,page.getPageSize());
-        dataRows = (List<Score>)map.get("result");
-            setTotalRecords((Integer)map.get("totalSize"));
-            setTotalPages(((totalRecords-1)/page.getPageSize())+1);
+        Map<String, Object> map = iScoreService.getScoreList(curPage, page.getPageSize(), jqGridSearchTo);
+        dataRows = (List<Score>) map.get("result");
+        setTotalRecords((Integer) map.get("totalSize"));
+        setTotalPages(((totalRecords - 1) / page.getPageSize()) + 1);
         return SUCCESS;
     }
 

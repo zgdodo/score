@@ -11,7 +11,6 @@ public class JqGridSearchDetailTo implements java.io.Serializable{
     private String field;  	//查询字段
     private String op;		//查询操作
     private String data;	//选择的查询值
-    private String groupOp; ///AND or OR
 
     public String getField() {
         return field;
@@ -26,7 +25,7 @@ public class JqGridSearchDetailTo implements java.io.Serializable{
     }
 
     public void setOp(String op) {
-        this.op = op;
+             this.op = op;
     }
 
     public String getData() {
@@ -37,11 +36,4 @@ public class JqGridSearchDetailTo implements java.io.Serializable{
         this.data = data;
     }
 
-    public String getGroupOp() {
-        return groupOp;
-    }
-
-    public void setGroupOp(String groupOp) {
-        this.groupOp = groupOp;
-    }
 }

@@ -4,6 +4,8 @@ import com.ibatis.sqlmap.client.SqlMapException;
 import org.mission.ctcoms.business.storage.IScoreService;
 import org.mission.ctcoms.dao.storage.IScoreDao;
 import org.mission.ctcoms.domain.Score;
+import org.mission.ctcoms.web.code.JqGridSearchDetailTo;
+import org.mission.ctcoms.web.code.JqGridSearchTo;
 
 import java.util.*;
 
@@ -60,17 +62,99 @@ public class ScoreServiceImpl implements IScoreService {
         result.put("errList", errList);
         return result;  //To change body of implemented methods use File | Settings | File Templates.
     }
+//
+//    @Override
+//    public Map<String, Object> getScoreList(int curPage, int pageLimit) throws Exception {
+//
+//
+//        return null;  //To change body of implemented methods use File | Settings | File Templates.
+//    }
 
     @Override
-        public Map<String,Object> getScoreList(int curPage,int pageLimit) throws Exception {
-        Map<String,Object> map = new HashMap<String, Object>();
+    public Map<String, Object> getScoreList(int curPage, int pageLimit, JqGridSearchTo jqGridSearchTo) throws Exception {
+        Map<String, String> sqlMap = generateSql(jqGridSearchTo);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        String sqlCount = sqlMap.get("sqlCount");
+        String sql = sqlMap.get("sql");
+
+        int totalSize = scoreDao.getRecordCount(sqlCount);
+        List<Score> sList = scoreDao.getScoreList(curPage, pageLimit, sql);
+
+        resultMap.put("result", sList);
+        resultMap.put("totalSize", totalSize);
+        return resultMap;
+    }
+
+    private Map<String, String> generateSql(JqGridSearchTo jqGridSearchTo) {
+        Map<String, String> map = new HashMap<String, String>();
         String sqlCount = "select count(1) from score";
         String sql = "select * from score";
-        int totalSize = scoreDao.getRecordCount(sqlCount);
-        List<Score> sList = scoreDao.getScoreList(curPage,pageLimit,sql);
 
-        map.put("result" ,sList);
-        map.put("totalSize",totalSize);
+        if (jqGridSearchTo == null) {
+            map.put("sqlCount", sqlCount);
+            map.put("sql", sql);
+        } else {
+            jqGridSearchTo.getRules()
+
+        }
+
         return map;
+
+    }
+
+    private String getSqlCondition(JqGridSearchTo jqGridSearchTo) {
+        StringBuffer condition = new StringBuffer("where ");
+
+        for (JqGridSearchDetailTo jqGridSearchDetailTo : (List<JqGridSearchDetailTo>) jqGridSearchTo.getRules()) {
+            condition.append(fieldTransform(jqGridSearchDetailTo.getField()));
+            condition.append()
+        }
+        return condition.toString();
+    }
+
+    private String fieldTransform(String filed) {
+        if (filed.equals("stuNumber"))
+            return "S_NUMBER";
+        if (filed.equals("exNumber"))
+            return "EX_NUMBER";
+        if (filed.equals("exDes"))
+            return "EX_DES";
+        if (filed.equals("totalScore"))
+            return "TOTAL_SCORE";
+        if (filed.equals("classRank"))
+            return "CLASS_RANK";
+        if (filed.equals("gradeRank"))
+            return "GRADE_RANK";
+        return filed;
+    }
+
+    private String opTransform(JqGridSearchDetailTo jqGridSearchDetailTo){
+        String cond ="";
+        String data ="\""+ jqGridSearchDetailTo.getData()+"\"";
+        switch (jqGridSearchDetailTo.getOp()){
+            case "eq":      //equal
+                cond = "="+data;
+                break;
+            case "ne":     //not equal
+                cond = "<>"+data;
+                break;
+            case "lt":    //little
+                cond = "<"+data;
+                break;
+            case "le":   //little or equal
+                cond = "<="+data;
+                break;
+            case "gt":   //greater
+                cond = ">"+data;
+                break;
+            case "ge":    //greater or equal
+                cond = ">="+data;
+                break;
+            case "eq":
+                cond = "="+data;
+                break;
+
+        }
     }
 }
