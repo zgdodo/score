@@ -2,6 +2,7 @@ package org.mission.ctcoms.business.storage.impl;
 
 import com.ibatis.sqlmap.client.SqlMapException;
 import org.mission.ctcoms.business.storage.IScoreService;
+import org.mission.ctcoms.common.Common;
 import org.mission.ctcoms.dao.storage.IScoreDao;
 import org.mission.ctcoms.domain.Score;
 import org.mission.ctcoms.web.code.JqGridSearchDetailTo;
@@ -86,75 +87,95 @@ public class ScoreServiceImpl implements IScoreService {
         return resultMap;
     }
 
+    /**
+     * 生成sql
+     *
+     * @param jqGridSearchTo
+     * @return
+     */
+
     private Map<String, String> generateSql(JqGridSearchTo jqGridSearchTo) {
         Map<String, String> map = new HashMap<String, String>();
         String sqlCount = "select count(1) from score";
         String sql = "select * from score";
 
-        if (jqGridSearchTo == null) {
-            map.put("sqlCount", sqlCount);
-            map.put("sql", sql);
-        } else {
-            jqGridSearchTo.getRules()
-
+        if (jqGridSearchTo != null) {
+            String condition = getSqlCondition(jqGridSearchTo);
+            sql = sql + condition;
+            sqlCount = sqlCount + condition;
         }
-
+        map.put("sqlCount", sqlCount);
+        map.put("sql", sql);
         return map;
 
     }
 
+    /**
+     * 生成sql条件
+     *
+     * @param jqGridSearchTo
+     * @return
+     */
     private String getSqlCondition(JqGridSearchTo jqGridSearchTo) {
-        StringBuffer condition = new StringBuffer("where ");
+        StringBuffer condition = new StringBuffer(" where ");
 
         for (JqGridSearchDetailTo jqGridSearchDetailTo : (List<JqGridSearchDetailTo>) jqGridSearchTo.getRules()) {
-            condition.append(fieldTransform(jqGridSearchDetailTo.getField()));
-            condition.append()
+            if (!condition.toString().equals(" where "))
+                condition.append(jqGridSearchTo.getGroupOp());
+            condition.append(" ");
+            condition.append(Common.fieldTransform(jqGridSearchDetailTo.getField()));
+            condition.append(opTransform(jqGridSearchDetailTo));
+            condition.append(" ");
         }
         return condition.toString();
     }
 
-    private String fieldTransform(String filed) {
-        if (filed.equals("stuNumber"))
-            return "S_NUMBER";
-        if (filed.equals("exNumber"))
-            return "EX_NUMBER";
-        if (filed.equals("exDes"))
-            return "EX_DES";
-        if (filed.equals("totalScore"))
-            return "TOTAL_SCORE";
-        if (filed.equals("classRank"))
-            return "CLASS_RANK";
-        if (filed.equals("gradeRank"))
-            return "GRADE_RANK";
-        return filed;
+    /**
+     * 转换操作符对应页面的操作
+     * @param jqGridSearchDetailTo
+     * @return
+     */
+    private String opTransform(JqGridSearchDetailTo jqGridSearchDetailTo) {
+        String cond;
+        String stringData = "\'" + jqGridSearchDetailTo.getData() + "\'";
+        String numbDate = jqGridSearchDetailTo.getData();
+        if (jqGridSearchDetailTo.getOp().equals("eq") && notInString(jqGridSearchDetailTo))
+            cond = "=" + numbDate;
+        else
+            cond = "=" + stringData;
+        if (jqGridSearchDetailTo.getOp().equals("ne"))
+            cond = "<>" + numbDate;
+
+        if (jqGridSearchDetailTo.getOp().equals("lt"))
+            cond = "<" + numbDate;
+
+        if (jqGridSearchDetailTo.getOp().equals("le"))
+            cond = "<=" + numbDate;
+
+        if (jqGridSearchDetailTo.getOp().equals("gt"))
+            cond = ">" + numbDate;
+
+        if (jqGridSearchDetailTo.getOp().equals("ge"))
+            cond = ">=" + numbDate;
+
+        if (jqGridSearchDetailTo.getOp().equals("bw"))
+            cond = " like \'" + numbDate + "%\'";
+        if (jqGridSearchDetailTo.getOp().equals("ew"))
+            cond = " like \'%" + numbDate + "\'";
+        if (jqGridSearchDetailTo.getOp().equals("cn"))
+            cond = " like \'%" + numbDate + "%\'";
+        return cond;
     }
 
-    private String opTransform(JqGridSearchDetailTo jqGridSearchDetailTo){
-        String cond ="";
-        String data ="\""+ jqGridSearchDetailTo.getData()+"\"";
-        switch (jqGridSearchDetailTo.getOp()){
-            case "eq":      //equal
-                cond = "="+data;
-                break;
-            case "ne":     //not equal
-                cond = "<>"+data;
-                break;
-            case "lt":    //little
-                cond = "<"+data;
-                break;
-            case "le":   //little or equal
-                cond = "<="+data;
-                break;
-            case "gt":   //greater
-                cond = ">"+data;
-                break;
-            case "ge":    //greater or equal
-                cond = ">="+data;
-                break;
-            case "eq":
-                cond = "="+data;
-                break;
-
-        }
+    private boolean notInString(JqGridSearchDetailTo jqGridSearchDetailTo) {
+        if (jqGridSearchDetailTo.getField().equals("stuNumber") ||
+                jqGridSearchDetailTo.getField().equals("exNumber") ||
+                jqGridSearchDetailTo.getField().equals("exDes") ||
+                jqGridSearchDetailTo.getField().equals("totalScore") ||
+                jqGridSearchDetailTo.getField().equals("classRank") ||
+                jqGridSearchDetailTo.getField().equals("gradeRank"))
+            return false;
+        return true;
     }
 }
+
