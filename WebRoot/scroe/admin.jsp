@@ -57,35 +57,53 @@
                 shrinkToFit: true,
                 colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
                 colModel: [
-                    {name: 'stuNumber', index: 'stuNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']}},
-                    {name: 'exNumber', index: 'exNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']}},
-                    {name: 'stuName', index: 'stuName', width: '80%',searchoptions:{sopt:['eq','bw','ew','cn']}},
-                    {name: 'chinese', index: 'chinese', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'maths', index: 'maths', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']} },
-                    {name: 'english', index: 'english', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'biology', index: 'biology', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'geogrophy', index: 'geogrophy', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'chemistry', index: 'chemistry', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'politics', index: 'politics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'physics', index: 'physics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'history', index: 'history', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'arts', index: 'arts', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'science', index: 'science', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'totalScore', index: 'totalScore', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'classRank', index: 'classRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'gradeRank', index: 'gradeRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']}},
-                    {name: 'exDes', index: 'exDes',searchoptions:{sopt:['eq','bw','ew','cn']}}
+                    {name: 'stuNumber', index: 'stuNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
+                        editable:true,editrules:{required:true,number:true}},
+                    {name: 'exNumber', index: 'exNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
+                        editable:true,editrules:{required:true,number:true}},
+                    {name: 'stuName', index: 'stuName', width: '80%',searchoptions:{sopt:['eq','bw','ew','cn']}
+                        ,editable:true},
+                    {name: 'chinese', index: 'chinese', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
+                    {name: 'maths', index: 'maths', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
+                    {name: 'english', index: 'english', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
+                    {name: 'biology', index: 'biology', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'geogrophy', index: 'geogrophy', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'chemistry', index: 'chemistry', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'politics', index: 'politics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'physics', index: 'physics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'history', index: 'history', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'arts', index: 'arts', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'science', index: 'science', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
+                    {name: 'totalScore', index: 'totalScore', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0}},
+                    {name: 'classRank', index: 'classRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0}},
+                    {name: 'gradeRank', index: 'gradeRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
+                        editable:true,editrules:{required:true,number:true,minValue:0}},
+                    {name: 'exDes', index: 'exDes',searchoptions:{sopt:['eq','bw','ew','cn']},editable:true}
 
                 ],
                 rowNum: 20,       //每页显示数
                 rowList: [20, 30, 50],
+                viewrecords: true,
+                editurl: 'operationAction.do',
                 jsonReader: {
                     root: "dataRows",                // 数据行（默认为：rows）
                     page: "curPage",            // 当前页(服务器端返回)
                     total: "totalPages",    // 总页数
                     records: "totalRecords",    // 总记录数
                     id: "id",
-                    viewrecords: true,
                     repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
                 },
                 prmNames: {
@@ -101,7 +119,7 @@
             });
 
             $("#queryList").jqGrid('navGrid', '#pageGrid',
-                    {del: false, add: false, edit: false},
+                    {del: true, add: false, edit: true},
                     {}, {}, {}, {multipleSearch: true});
 
 

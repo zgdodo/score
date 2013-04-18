@@ -33,5 +33,7 @@
           scope="request">
         <property name="iScoreService" ref="scoreService"/>
     </bean>
-
+     <bean name="operationAction" class="org.mission.ctcoms.web.code.OperationAction" scope="request">
+         <property name="iScoreService" ref="scoreService"/>
+     </bean>
 </beans>

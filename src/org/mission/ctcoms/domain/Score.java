@@ -2,6 +2,8 @@ package org.mission.ctcoms.domain;
 
 import org.mission.ctcoms.excel.ExcelAnnotation;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: do
@@ -12,41 +14,41 @@ import org.mission.ctcoms.excel.ExcelAnnotation;
 public class Score {
 
     long id;
-    @ExcelAnnotation(exportName ="学号" )
+    @ExcelAnnotation(exportName = "学号")
     String stuNumber;
-    @ExcelAnnotation(exportName ="考号" )
+    @ExcelAnnotation(exportName = "考号")
     String exNumber;
-    @ExcelAnnotation(exportName ="姓名" )
+    @ExcelAnnotation(exportName = "姓名")
     String stuName;
-    @ExcelAnnotation(exportName ="语文" )
+    @ExcelAnnotation(exportName = "语文")
     String chinese;
-    @ExcelAnnotation(exportName ="数学" )
+    @ExcelAnnotation(exportName = "数学")
     String maths;
-    @ExcelAnnotation(exportName ="英语" )
+    @ExcelAnnotation(exportName = "英语")
     String english;
-    @ExcelAnnotation(exportName ="生物" )
+    @ExcelAnnotation(exportName = "生物")
     String biology;
-    @ExcelAnnotation(exportName ="地理" )
+    @ExcelAnnotation(exportName = "地理")
     String geogrophy;
-    @ExcelAnnotation(exportName ="化学" )
+    @ExcelAnnotation(exportName = "化学")
     String chemistry;
-    @ExcelAnnotation(exportName ="政治" )
+    @ExcelAnnotation(exportName = "政治")
     String politics;
-    @ExcelAnnotation(exportName ="物理" )
+    @ExcelAnnotation(exportName = "物理")
     String physics;
-    @ExcelAnnotation(exportName ="历史" )
+    @ExcelAnnotation(exportName = "历史")
     String history;
-    @ExcelAnnotation(exportName ="文综" )
+    @ExcelAnnotation(exportName = "文综")
     String arts;
-    @ExcelAnnotation(exportName ="理综" )
+    @ExcelAnnotation(exportName = "理综")
     String science;
-    @ExcelAnnotation(exportName ="总分" )
+    @ExcelAnnotation(exportName = "总分")
     String totalScore;
-    @ExcelAnnotation(exportName ="考试批次" )
+    @ExcelAnnotation(exportName = "考试批次")
     String exDes;
-    @ExcelAnnotation(exportName ="班级排名" )
+    @ExcelAnnotation(exportName = "班级排名")
     String classRank;
-    @ExcelAnnotation(exportName ="年级排名" )
+    @ExcelAnnotation(exportName = "年级排名")
     String gradeRank;
 
 
@@ -201,4 +203,32 @@ public class Score {
     public void setTotalScore(String totalScore) {
         this.totalScore = totalScore;
     }
+
+    public Score(){}
+
+
+    public Score(Map<String,String[]> map) {
+
+        this.id = Long.parseLong(map.get("id")[0]);
+        this.stuNumber = map.get("stuNumber")[0];
+        this.exNumber = map.get("exNumber")[0];
+        this.stuName = map.get("stuName")[0];
+        this.chinese = map.get("chinese")[0];
+        this.maths = map.get("maths")[0];
+        this.english = map.get("english")[0];
+        this.biology = map.get("biology")[0];
+        this.geogrophy = map.get("geogrophy")[0];
+        this.chemistry = map.get("chemistry")[0];
+        this.politics = map.get("politics")[0];
+        this.physics = map.get("physics")[0];
+        this.history = map.get("history")[0];
+        this.arts = map.get("arts")[0];
+        this.science = map.get("science")[0];
+        this.totalScore = map.get("totalScore")[0];
+        this.exDes = map.get("exDes")[0];
+        this.classRank = map.get("classRank")[0];
+        this.gradeRank = map.get("gradeRank")[0];
+    }
+
+
 }

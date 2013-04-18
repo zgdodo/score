@@ -61,15 +61,8 @@ public class ScoreServiceImpl implements IScoreService {
         result.put("saveStu", saveStu);
         result.put("errStu", errStu);
         result.put("errList", errList);
-        return result;  //To change body of implemented methods use File | Settings | File Templates.
+        return result;
     }
-//
-//    @Override
-//    public Map<String, Object> getScoreList(int curPage, int pageLimit) throws Exception {
-//
-//
-//        return null;  //To change body of implemented methods use File | Settings | File Templates.
-//    }
 
     @Override
     public Map<String, Object> getScoreList(int curPage, int pageLimit, JqGridSearchTo jqGridSearchTo) throws Exception {
@@ -85,6 +78,11 @@ public class ScoreServiceImpl implements IScoreService {
         resultMap.put("result", sList);
         resultMap.put("totalSize", totalSize);
         return resultMap;
+    }
+
+    @Override
+    public boolean updateScore(Score score) throws Exception {
+        return scoreDao.updateScore(score);
     }
 
     /**
@@ -132,6 +130,7 @@ public class ScoreServiceImpl implements IScoreService {
 
     /**
      * 转换操作符对应页面的操作
+     *
      * @param jqGridSearchDetailTo
      * @return
      */
@@ -167,15 +166,21 @@ public class ScoreServiceImpl implements IScoreService {
         return cond;
     }
 
+    /**
+     * 区分科目和学生信息学生信息是字符串查询，科目是查询成绩数字查询。
+     *
+     * @param jqGridSearchDetailTo
+     * @return
+     */
     private boolean notInString(JqGridSearchDetailTo jqGridSearchDetailTo) {
         if (jqGridSearchDetailTo.getField().equals("stuNumber") ||
                 jqGridSearchDetailTo.getField().equals("exNumber") ||
                 jqGridSearchDetailTo.getField().equals("exDes") ||
-                jqGridSearchDetailTo.getField().equals("totalScore") ||
-                jqGridSearchDetailTo.getField().equals("classRank") ||
-                jqGridSearchDetailTo.getField().equals("gradeRank"))
+                jqGridSearchDetailTo.getField().equals("stuName"))
             return false;
         return true;
     }
+
+
 }
 

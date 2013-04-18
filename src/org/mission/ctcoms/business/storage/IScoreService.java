@@ -36,7 +36,7 @@ public interface IScoreService {
      */
     Map<String ,Object> getScoreList(int curPage,int pageLimit,JqGridSearchTo jqGridSearchTo) throws Exception;
 
-//    Map<String ,Object> getScoreList(int curPage,int pageLimit) throws Exception ;
+    boolean updateScore(Score score) throws Exception;
 
 
 
