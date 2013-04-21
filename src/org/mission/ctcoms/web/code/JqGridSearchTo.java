@@ -13,6 +13,7 @@ import java.util.List;
 public class JqGridSearchTo implements Serializable {
     private String groupOp;		//多字段查询时分组类型，主要是AND或者OR
     private List<JqGridSearchDetailTo> rules; //多字段查询时候，查询条件的集合
+    private String stuNumber;
 
     private int page;	//当前第几页
     private int rows;	//每页显示多少条数据
@@ -111,5 +112,13 @@ public class JqGridSearchTo implements Serializable {
 
     public void setSearchOper(String searchOper) {
         this.searchOper = searchOper;
+    }
+
+    public String getStuNumber() {
+        return stuNumber;
+    }
+
+    public void setStuNumber(String stuNumber) {
+        this.stuNumber = stuNumber;
     }
 }

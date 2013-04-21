@@ -96,7 +96,7 @@ public class ScoreServiceImpl implements IScoreService {
         Map<String, String> map = new HashMap<String, String>();
         String sqlCount = "select count(1) from score";
         String sql = "select * from score";
-
+        //当用户是admin并且不是查询时才为空
         if (jqGridSearchTo != null) {
             String condition = getSqlCondition(jqGridSearchTo);
             sql = sql + condition;
@@ -110,20 +110,30 @@ public class ScoreServiceImpl implements IScoreService {
 
     /**
      * 生成sql条件
+     * 当用户是admin，并且在查询时，当用户不是admin时，当用户不是admin并且是查询时执行
      *
-     * @param jqGridSearchTo
      * @return
+     * @pram jqGridSearchTo
      */
     private String getSqlCondition(JqGridSearchTo jqGridSearchTo) {
-        StringBuffer condition = new StringBuffer(" where ");
 
-        for (JqGridSearchDetailTo jqGridSearchDetailTo : (List<JqGridSearchDetailTo>) jqGridSearchTo.getRules()) {
-            if (!condition.toString().equals(" where "))
-                condition.append(jqGridSearchTo.getGroupOp());
-            condition.append(" ");
-            condition.append(Common.fieldTransform(jqGridSearchDetailTo.getField()));
-            condition.append(opTransform(jqGridSearchDetailTo));
-            condition.append(" ");
+        StringBuffer condition = new StringBuffer(" where ");
+        //当用户不是admin时   where s_number= 'stuNumber'
+        if (jqGridSearchTo.getStuNumber()!=null&&!jqGridSearchTo.getStuNumber().equals("0001")) {
+            condition.append(" S_NUMBER='");
+            condition.append(jqGridSearchTo.getStuNumber());
+            condition.append("'");
+        }
+        //当admin查询时第一轮 condition = " where " ,当非admin时、查询时第一轮    where s_number= 'stuNumber'
+        if (jqGridSearchTo.isSearch()) {
+            for (JqGridSearchDetailTo jqGridSearchDetailTo : (List<JqGridSearchDetailTo>) jqGridSearchTo.getRules()) {
+                if (!condition.toString().equals(" where "))
+                    condition.append(jqGridSearchTo.getGroupOp());
+                condition.append(" ");
+                condition.append(Common.fieldTransform(jqGridSearchDetailTo.getField()));
+                condition.append(opTransform(jqGridSearchDetailTo));
+                condition.append(" ");
+            }
         }
         return condition.toString();
     }

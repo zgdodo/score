@@ -34,6 +34,15 @@
                             data.errStu + "条");
                 }
             });
+            $("#importCommon").ajaxForm({
+                url: "importExcel.do",
+                beforeSubmit: check,
+                success: function (data) {
+                    alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
+                            data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
+                            data.errStu + "条");
+                }
+            });
             function check() {
                 var filePath = $("input[name='attachment']").val();
                 if (filePath == undefined || $.trim(filePath) == "") {
@@ -142,7 +151,8 @@
 
     <ul>
         <li><a href="#tabs-2">成绩查询</a></li>
-        <li><a href="#tabs-1">导入 excel</a></li>
+        <li><a href="#tabs-1">导入成绩</a></li>
+        <li><a href="#tabs-3">导入评语</a></li>
     </ul>
     <div id="tabs-1">
         <form method="post" id="importForm" enctype="MULTIPART/FORM-DATA">
@@ -168,6 +178,25 @@
         <table id="queryList"></table>
         <div id="pageGrid"></div>
 
+    </div>
+    <div id="tabs-3">
+        <form method="post" id="importCommon" enctype="MULTIPART/FORM-DATA">
+            <table>
+                <tr>
+                    <td>
+                        <input type="file" name="attachment2" id="attachment2"/>
+                    </td>
+
+                    <td>
+                        <input type="submit" name="fileSub2" value="导入"/>
+                        <%--<button id="fileSub"></button>--%>
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </form>
     </div>
 </div>
 

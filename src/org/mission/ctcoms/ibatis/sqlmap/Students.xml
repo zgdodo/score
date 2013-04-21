@@ -18,7 +18,7 @@
          select password from students  where s_number =#value#
      </select>
 
-    <select id="getStuInfoBySNumber" parameterClass="java.lang.String" resultClass="students">
+    <select id="getStuInfoBySNumber" parameterClass="java.lang.String" resultMap="stuMap">
           select * from students where s_number =#value#
     </select>
 </sqlMap>

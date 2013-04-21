@@ -74,14 +74,13 @@ public class LoginAction extends BaseAction {
             result.put("error", error);
             this.setResp(result);
 
-        }
-        if (!stuNumber.equals("0001")) {
+        } else if (!stuNumber.equals("0001")) {
             if (!valid) {
                 result.put("url", "/login.jsp");
                 result.put("error", error);
                 this.setResp(result);
             } else {
-                getSession().setAttribute("stu", students);
+                getSession().setAttribute("stu", students.getStuNumber());
                 result.put("url", "/scroe/query.jsp");
                 this.setResp(result);
             }      //end if valid
@@ -91,7 +90,7 @@ public class LoginAction extends BaseAction {
                 result.put("error", error);
                 this.setResp(result);
             }
-            getSession().setAttribute("stu", students);     //end if valid
+            getSession().setAttribute("stu", students.getStuNumber());     //end if valid
             result.put("url", "/scroe/admin.jsp");
             this.setResp(result);
         }   //end if equal

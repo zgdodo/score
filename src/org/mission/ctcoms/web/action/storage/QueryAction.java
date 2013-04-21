@@ -31,14 +31,24 @@ public class QueryAction extends JsonBaseAction<Score> {
 
     public String execute() throws Exception {
         JqGridSearchTo jqGridSearchTo = null;
+        String stuNumber;
+        stuNumber = (String) getSession().getAttribute("stu");
+
         if (isSearch() && filters != null) {
             JSONObject filt = JSONObject.fromObject(filters);
             Map m = new HashMap();
             m.put("rules", JqGridSearchDetailTo.class);
             jqGridSearchTo = (JqGridSearchTo) JSONObject.toBean(filt, JqGridSearchTo.class, m);
-            log4j.info(jqGridSearchTo);
+            jqGridSearchTo.setSearch(isSearch());
         }
-
+        //当不是按条件查询时，jqGridSearchTo可能为空，要构建一个 admin可查询所有记录故不放入
+        if (jqGridSearchTo == null && stuNumber != null && !stuNumber.equals("0001"))
+        {
+            jqGridSearchTo = new JqGridSearchTo();
+            jqGridSearchTo.setStuNumber(stuNumber);
+        }  else if(jqGridSearchTo != null && stuNumber != null&&!stuNumber.equals("0001")){
+            jqGridSearchTo.setStuNumber(stuNumber);
+        }
         Map<String, Object> map = iScoreService.getScoreList(curPage, page.getPageSize(), jqGridSearchTo);
         dataRows = (List<Score>) map.get("result");
         setTotalRecords((Integer) map.get("totalSize"));
