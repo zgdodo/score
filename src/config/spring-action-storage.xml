@@ -27,7 +27,8 @@
 
     <bean name="importAction" class="org.mission.ctcoms.web.action.storage.ImportAction"
           scope="request">
-        <property name="iScoreService" ref="scoreService"/>
+        <property name="scoreService" ref="scoreService"/>
+        <property name="commentService" ref="commentService"/>
     </bean>
     <bean name="queryAtion" class="org.mission.ctcoms.web.action.storage.QueryAction"
           scope="request">

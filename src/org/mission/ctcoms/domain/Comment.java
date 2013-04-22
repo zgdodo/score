@@ -1,5 +1,7 @@
 package org.mission.ctcoms.domain;
 
+import org.mission.ctcoms.excel.ExcelAnnotation;
+
 import java.util.Date;
 
 /**
@@ -10,10 +12,23 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Comment {
+    String id ;
+    @ExcelAnnotation(exportName = "学号")
     String stuNumber;
+    @ExcelAnnotation(exportName = "近期表现")
     String behaviour;
+    @ExcelAnnotation(exportName = "老师评语")
     String evaluation;
+    @ExcelAnnotation(exportName = "评价时间")
     Date cTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getStuNumber() {
         return stuNumber;
@@ -39,11 +54,15 @@ public class Comment {
         this.evaluation = evaluation;
     }
 
-    public Date getcTime() {
+    public Date getCTime() {
         return cTime;
     }
 
-    public void setcTime(Date cTime) {
+    public void setCTime(Date cTime) {
         this.cTime = cTime;
+    }
+
+    public void setCTime(String cTime){
+        this.cTime= new Date(cTime);
     }
 }

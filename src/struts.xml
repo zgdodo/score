@@ -30,6 +30,11 @@
                 <param name="root">importResult</param>
             </result>
         </action>
+        <action class="importAction" method="importComm" name="importComm">
+            <result type="json">
+                <param name="root">importResult</param>
+            </result>
+        </action>
     </package>
     <package name="json-query" extends="json-default">
         <action class="queryAtion" name="queryAction">

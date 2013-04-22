@@ -1,7 +1,9 @@
 package org.mission.ctcoms.web.action.storage;
 
+import org.mission.ctcoms.business.storage.ICommentService;
 import org.mission.ctcoms.business.storage.IScoreService;
 import org.mission.ctcoms.dao.storage.IScoreDao;
+import org.mission.ctcoms.domain.Comment;
 import org.mission.ctcoms.domain.Score;
 import org.mission.ctcoms.excel.ImportExcel;
 import org.mission.ctcoms.web.code.BaseAction;
@@ -20,6 +22,7 @@ import java.util.Map;
  */
 public class ImportAction extends BaseAction {
     private File attachment;
+    private File attachment2;
     private Map<String, Object> importResult;
 
     public Map<String, Object> getImportResult() {
@@ -31,13 +34,22 @@ public class ImportAction extends BaseAction {
     }
 
     private IScoreService scoreService;
+    private ICommentService commentService;
+
+    public void setScoreService(IScoreService scoreService) {
+        this.scoreService = scoreService;
+    }
+
+    public void setCommentService(ICommentService commentService) {
+        this.commentService = commentService;
+    }
 
     public void setAttachment(File attachment) {
         this.attachment = attachment;
     }
 
-    public void setiScoreService(IScoreService scoreService) {
-        this.scoreService = scoreService;
+    public void setAttachment2(File attachment2) {
+        this.attachment2 = attachment2;
     }
 
     public String importExcel() throws Exception {
@@ -45,6 +57,13 @@ public class ImportAction extends BaseAction {
         ImportExcel<Score> scores = new ImportExcel(Score.class);
         List<Score> result = (ArrayList) scores.importExcel(attachment);
         importResult = scoreService.saveScoreBatch(result);
+        return SUCCESS;
+    }
+
+    public String importComm()throws Exception{
+        ImportExcel<Comment> comment = new ImportExcel(Comment.class);
+        List<Comment> result = (ArrayList)comment.importExcel(attachment2);
+        importResult = commentService.saveCommentBatch(result);
         return SUCCESS;
     }
 }

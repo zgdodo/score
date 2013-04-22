@@ -131,11 +131,13 @@ public class ImportExcel<T> {
 //                    判断类型并放入实体，excel的类型和实体类型都要匹配不然会出错，摊上事，摊上麻烦事
                             Method setMethod = (Method) fieldmap.get(titleString);
                             String value = "";
+                            Date tvalue = null;
                             if (cell != null) {
                                 switch (cell.getCellType()) {
                                     case HSSFCell.CELL_TYPE_NUMERIC: // 数值型
                                         if (HSSFDateUtil.isCellDateFormatted(cell)) {
                                             // 如果是date类型则 ，获取该cell的date值
+                                            tvalue = cell.getDateCellValue();
                                             value = HSSFDateUtil.getJavaDate(
                                                     cell.getNumericCellValue())
                                                     .toString();
@@ -174,7 +176,10 @@ public class ImportExcel<T> {
                                         value = cell.getRichStringCellValue()
                                                 .toString().trim();
                                 }
-                                setMethod.invoke(tObject, value);
+                                if (tvalue != null) {
+                                    setMethod.invoke(tObject, tvalue);
+                                } else
+                                    setMethod.invoke(tObject, value);
                             } else
                                 setMethod.invoke(tObject, "0");
 

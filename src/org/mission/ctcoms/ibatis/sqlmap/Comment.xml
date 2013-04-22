@@ -3,12 +3,32 @@
         PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
         "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="Comment">
-       <typeAlias alias="comment" type="org.mission.ctcoms.domain.Comment"/>
+    <typeAlias alias="comment" type="org.mission.ctcoms.domain.Comment"/>
     <resultMap class="comment" id="comMap">
+        <result property="id" column="ID"/>
         <result property="stuNumber" column="S_NUMBER"/>
         <result property="behaviour" column="BEHAVIOUR"/>
         <result property="evaluation" column="EVALUATION"/>
         <result property="cTime" column="C_TIME"/>
     </resultMap>
+
+    <insert id="saveComment" parameterClass="comment">
+        insert into comment (S_NUMBER,BEHAVIOUR,EVALUATION,C_TIME)
+        value (#stuNumber#,#behaviour#,#evaluation#,#cTime#)
+    </insert>
+
+    <update id="updateCommnet" parameterClass="comment">
+        Update commnet
+        set
+             S_NUMBER=#stuNumber#,
+             BEHAVIOUR=#behaviour#,
+             EVALUATION=#evaluation#,
+             C_TIME=#cTime#
+        where ID = #id#
+    </update>
+
+    <select id="getSameComment" parameterClass="comment" resultMap="comMap">
+        select * from comment where  S_NUMBER = #stuNumber# and C_TIME = #cTime#
+    </select>
 
 </sqlMap>

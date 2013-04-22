@@ -26,6 +26,9 @@
           class="org.mission.ctcoms.business.storage.impl.ScoreServiceImpl">
         <property name="scoreDao" ref="scoreDao"/>
           </bean>
+    <bean id="commentService"
+          class="org.mission.ctcoms.business.storage.impl.CommentServiceImpl">
+        <property name="commentDao" ref="commentDao"/>
+          </bean>
 
-	
 </beans>

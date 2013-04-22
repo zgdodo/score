@@ -11,6 +11,7 @@
     <bean id="loginDao" class="org.mission.ctcoms.dao.storage.impl.StudentsDaoImpl" parent="baseIbatisDAO"/>
     <bean id="examDao" class="org.mission.ctcoms.dao.storage.impl.ExamDaoImpl" parent="baseIbatisDAO"/>
     <bean id="scoreDao" class="org.mission.ctcoms.dao.storage.impl.ScoreDaoImpl" parent="baseIbatisDAO"/>
+    <bean id="commentDao" class="org.mission.ctcoms.dao.storage.impl.CommentDaoImpl" parent="baseIbatisDAO"/>
 </beans>
 
 
