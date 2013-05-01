@@ -70,4 +70,8 @@
         $sql$
     </select>
 
+    <delete id="delScoreById" parameterClass="Long" >
+        delete from score where id = #id#
+    </delete>
+
 </sqlMap>

@@ -5,6 +5,7 @@ function doResize() {
     //将jqGrid窗口的宽度设置为ss.WinW-20，高度设置为ss.WinH-93
     //这里的20和93是真实宽高度的修正值，你可以自己去试一下找到最合适你的那个数值
     $("#queryList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
+    $("#commonList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
 }
 //
 //function getPageSize() {

@@ -48,6 +48,18 @@
             </result>
         </action>
     </package>
+    <package name="json-Commentquery" extends="json-default">
+        <action class="commentAction" name="commentAction">
+            <result type="json">
+            </result>
+        </action>
+    </package>
+    <package name="json-CommentOperation" extends="json-default">
+        <action name="commentOprAction" class="commentOprAction">
+            <result type="json">
+            </result>
+        </action>
+    </package>
     <!--
         该属性指定需要Struts 2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。
         如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开。

@@ -21,6 +21,8 @@ public interface IScoreDao {
 
     boolean  updateScore(Score score);
 
+    boolean delScore(Long id);
+
     List<Score>  getSameScore(Score score) throws Exception;
 
     int getRecordCount(Score  score) throws Exception;

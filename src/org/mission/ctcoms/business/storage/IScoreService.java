@@ -38,6 +38,8 @@ public interface IScoreService {
 
     boolean updateScore(Score score) throws Exception;
 
+    boolean delScore(String id ) throws Exception;
+
 
 
 }

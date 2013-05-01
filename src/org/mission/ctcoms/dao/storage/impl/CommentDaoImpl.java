@@ -25,6 +25,7 @@ public class CommentDaoImpl extends BaseIbaitsDAO implements ICommentDao {
         return true;
     }
 
+    //暂没使用
     @Override
     public List<Comment> getCommentListByStuNum(String sNumber) throws Exception {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -32,9 +33,19 @@ public class CommentDaoImpl extends BaseIbaitsDAO implements ICommentDao {
 
     @Override
     public boolean updateComment(Comment comment) {
-
         try {
             update("Comment.updateCommnet", comment);
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delComment(Long id) {
+        try {
+            delete("Comment.delCommentById", id);
         } catch (Exception e) {
             System.out.println(e);
             return false;
@@ -54,11 +65,13 @@ public class CommentDaoImpl extends BaseIbaitsDAO implements ICommentDao {
 
     @Override
     public int getRecordCount(String sql) throws Exception {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return (Integer) loadObject("Comment.getCount", sql);
     }
 
     @Override
     public List<Comment> getCommentList(int curPage, int pageLimit, String sql) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        int from = pageLimit * curPage - pageLimit;
+        String sqlString = sql + " limit " + from + "," + pageLimit;
+        return loadList("Comment.getCommentList", sqlString);
     }
 }

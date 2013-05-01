@@ -18,6 +18,8 @@ public interface ICommentDao {
 
     boolean  updateComment(Comment comment);
 
+    boolean delComment(Long id);
+
     List<Comment>  getSameComment(Comment comment) throws Exception;
 
     int getRecordCount(Comment comment) throws Exception;

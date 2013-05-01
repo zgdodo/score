@@ -10,226 +10,249 @@
 <!doctype html>
 <html>
 <head>
-    <title>管理页面</title>
+<title>管理页面</title>
 
-    <link href="/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet"/>
-    <link href="/style/ui.jqgrid.css" rel="stylesheet"/>
-    <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.form.js"></script>
-    <script src="/js/grid.locale-cn.js" type="text/javascript"></script>
-    <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
-    <script src="/js/autosize.js" type="text/javascript"></script>
-    <script>
+<link href="/style/jquery-ui-1.9.2.custom.min.css" rel="stylesheet"/>
+<link href="/style/ui.jqgrid.css" rel="stylesheet"/>
+<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="/js/jquery.form.js"></script>
+<script src="/js/grid.locale-cn.js" type="text/javascript"></script>
+<script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="/js/autosize.js" type="text/javascript"></script>
+<script>
+//        function doResize() {
+//            var ss = getPageSize();
+//            //将jqGrid窗口的宽度设置为ss.WinW-20，高度设置为ss.WinH-93
+//            //这里的20和93是真实宽高度的修正值，你可以自己去试一下找到最合适你的那个数值
+//            $("#queryList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
+//            $("#commonList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
+//        }
+$(document).ready(function () {
 
-        $(document).ready(function () {
-
-            $("#tabs").tabs();
-            $("#importForm").ajaxForm({
-                url: "importExcel.do",
-                beforeSubmit: check,
-                success: function (data) {
-                    alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
-                            data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
-                            data.errStu + "条");
-                }
-            });
-            $("#importCommon").ajaxForm({
-                url: "importComm.do",
-                beforeSubmit: checkComment,
-                success: function (data) {
-                    alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
-                            data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
-                            data.errStu + "条");
-                }
-            });
-            function check() {
-                var filePath = $("input[name='attachment']").val();
-                if (filePath == undefined || $.trim(filePath) == "") {
-                    alert("请选择上传文件");
-                    return false;
-                }
-                var extStart = filePath.lastIndexOf(".");
-                var ext = filePath.substring(extStart, filePath.length).toUpperCase();
-                if (ext != ".XLS" && ext != ".XLSX") {
-                    alert("只能上传excel");
-                    return false;
-
-                }
-                return true;
+    $("#tabs").tabs();
+    $("#importForm").ajaxForm({
+        url: "importExcel.do",
+        beforeSubmit: check,
+        success: function (data) {
+            alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
+                    data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
+                    data.errStu + "条");
         }
-            function checkComment() {
-                var filePath = $("input[name='attachment2']").val();
-                if (filePath == undefined || $.trim(filePath) == "") {
-                    alert("请选择上传文件");
-                    return false;
-                }
-                var extStart = filePath.lastIndexOf(".");
-                var ext = filePath.substring(extStart, filePath.length).toUpperCase();
-                if (ext != ".XLS" && ext != ".XLSX") {
-                    alert("只能上传excel");
-                    return false;
-
-                }
-                return true;
-            }
-
-            $("#queryList").jqGrid({
-                url: 'queryAction.do',
-                datatype: "json",
-                autowidth: false,
-                shrinkToFit: true,
-                colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
-                colModel: [
-                    {name: 'stuNumber', index: 'stuNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
-                        editable:true,editrules:{required:true,number:true}},
-                    {name: 'exNumber', index: 'exNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
-                        editable:true,editrules:{required:true,number:true}},
-                    {name: 'stuName', index: 'stuName', width: '80%',searchoptions:{sopt:['eq','bw','ew','cn']}
-                        ,editable:true},
-                    {name: 'chinese', index: 'chinese', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'maths', index: 'maths', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'english', index: 'english', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'biology', index: 'biology', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'geogrophy', index: 'geogrophy', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'chemistry', index: 'chemistry', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'politics', index: 'politics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'physics', index: 'physics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'history', index: 'history', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'arts', index: 'arts', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'science', index: 'science', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'totalScore', index: 'totalScore', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'classRank', index: 'classRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'gradeRank', index: 'gradeRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'exDes', index: 'exDes',searchoptions:{sopt:['eq','bw','ew','cn']},editable:true}
-
-                ],
-                rowNum: 20,       //每页显示数
-                rowList: [20, 30, 50],
-                viewrecords: true,
-                editurl: 'operationAction.do',
-                jsonReader: {
-                    root: "dataRows",                // 数据行（默认为：rows）
-                    page: "curPage",            // 当前页(服务器端返回)
-                    total: "totalPages",    // 总页数
-                    records: "totalRecords",    // 总记录数
-                    id: "id",
-                    repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
-                },
-                prmNames: {
-                    rows: "page.pageSize",       //每页显示数理论上对应rowNum
-                    page: "curPage",      //当前页（客户端提交）
-                    sort: "page.orderBy",
-                    order: "page.order",
-                    search: "search"
-                },
-
-                pager: "#pageGrid"
-
-            });
-
-            $("#queryList").jqGrid('navGrid', '#pageGrid',
-                    {del: true, add: false, edit: true},
-                    {}, {}, {}, {multipleSearch: true});
-
-            $("#commonList").jqGrid({
-                url: 'queryAction.do',
-                datatype: "json",
-                autowidth: false,
-                shrinkToFit: true,
-                colNames: [ '学号','近期表现','老师评价','评价时间'],
-                colModel: [
-                    {name: 'stuNumber', index: 'stuNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
-                        editable:true,editrules:{required:true,number:true}},
-                    {name: 'exNumber', index: 'exNumber', width: '90%',searchoptions:{sopt:['eq','bw','ew','cn']},
-                        editable:true,editrules:{required:true,number:true}},
-                    {name: 'stuName', index: 'stuName', width: '80%',searchoptions:{sopt:['eq','bw','ew','cn']}
-                        ,editable:true},
-                    {name: 'chinese', index: 'chinese', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'maths', index: 'maths', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'english', index: 'english', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:150}},
-                    {name: 'biology', index: 'biology', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'geogrophy', index: 'geogrophy', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'chemistry', index: 'chemistry', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'politics', index: 'politics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'physics', index: 'physics', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'history', index: 'history', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'arts', index: 'arts', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'science', index: 'science', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0,maxValue:100}},
-                    {name: 'totalScore', index: 'totalScore', width: '60%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'classRank', index: 'classRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'gradeRank', index: 'gradeRank', width: '65%',searchoptions:{sopt:['eq','ne','lt','le','gt','ge']},
-                        editable:true,editrules:{required:true,number:true,minValue:0}},
-                    {name: 'exDes', index: 'exDes',searchoptions:{sopt:['eq','bw','ew','cn']},editable:true}
-
-                ],
-                rowNum: 20,       //每页显示数
-                rowList: [20, 30, 50],
-                viewrecords: true,
-                editurl: 'operationAction.do',
-                jsonReader: {
-                    root: "dataRows",                // 数据行（默认为：rows）
-                    page: "curPage",            // 当前页(服务器端返回)
-                    total: "totalPages",    // 总页数
-                    records: "totalRecords",    // 总记录数
-                    id: "id",
-                    repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
-                },
-                prmNames: {
-                    rows: "page.pageSize",       //每页显示数理论上对应rowNum
-                    page: "curPage",      //当前页（客户端提交）
-                    sort: "page.orderBy",
-                    order: "page.order",
-                    search: "search"
-                },
-
-                pager: "#commPageGrid"
-
-            });
-
-            $("#commonList").jqGrid('navGrid', '#commPageGrid',
-                    {del: true, add: false, edit: true},
-                    {}, {}, {}, {multipleSearch: true});
-
-            doResize()
-        });
-    </script>
-    <style>
-        body {
-            font: 70.5% "Trebuchet MS", sans-serif;
+    });
+    $("#importCommon").ajaxForm({
+        url: "importComm.do",
+        beforeSubmit: checkComment,
+        success: function (data) {
+            alert("本次导入excel总条数：" + data.allSto + ",其中更新：" +
+                    data.updateStu + "条,录入：" + data.saveStu + "条,错误：" +
+                    data.errStu + "条");
         }
-
-        table {
-            font: 99% "Trebuchet MS", sans-serif;
+    });
+    function check() {
+        var filePath = $("input[name='attachment']").val();
+        if (filePath == undefined || $.trim(filePath) == "") {
+            alert("请选择上传文件");
+            return false;
         }
-    </style>
+        var extStart = filePath.lastIndexOf(".");
+        var ext = filePath.substring(extStart, filePath.length).toUpperCase();
+        if (ext != ".XLS" && ext != ".XLSX") {
+            alert("只能上传excel");
+            return false;
+
+        }
+        return true;
+    }
+
+    function checkComment() {
+        var filePath = $("input[name='attachment2']").val();
+        if (filePath == undefined || $.trim(filePath) == "") {
+            alert("请选择上传文件");
+            return false;
+        }
+        var extStart = filePath.lastIndexOf(".");
+        var ext = filePath.substring(extStart, filePath.length).toUpperCase();
+        if (ext != ".XLS" && ext != ".XLSX") {
+            alert("只能上传excel");
+            return false;
+
+        }
+        return true;
+    }
+
+
+    $("#queryList").jqGrid({
+        url: 'queryAction.do',
+        datatype: "json",
+        autowidth: false,
+        shrinkToFit: true,
+        colNames: ['考号', '学号', '姓名', '语文', '数学', '英语', '政治', '历史', '地理', '物理', '化学', '生物', '文综', '理综', '总分', '班级排名', '年级排名', '考试批次'],
+        colModel: [
+            {name: 'stuNumber', index: 'stuNumber', width: '90%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
+                editable: true, editrules: {required: true, number: true}},
+            {name: 'exNumber', index: 'exNumber', width: '90%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
+                editable: true, editrules: {required: true, number: true}},
+            {name: 'stuName', index: 'stuName', width: '80%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}, editable: true},
+            {name: 'chinese', index: 'chinese', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 150}},
+            {name: 'maths', index: 'maths', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 150}},
+            {name: 'english', index: 'english', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 150}},
+            {name: 'biology', index: 'biology', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'geogrophy', index: 'geogrophy', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'chemistry', index: 'chemistry', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'politics', index: 'politics', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'physics', index: 'physics', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'history', index: 'history', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'arts', index: 'arts', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'science', index: 'science', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0, maxValue: 100}},
+            {name: 'totalScore', index: 'totalScore', width: '60%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0}},
+            {name: 'classRank', index: 'classRank', width: '65%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0}},
+            {name: 'gradeRank', index: 'gradeRank', width: '65%', searchoptions: {sopt: ['eq', 'ne', 'lt', 'le', 'gt', 'ge']},
+                editable: true, editrules: {required: true, number: true, minValue: 0}},
+            {name: 'exDes', index: 'exDes', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}, editable: true}
+
+        ],
+        rowNum: 20,       //每页显示数
+        rowList: [20, 30, 50],
+        viewrecords: true,
+        editurl: 'operationAction.do',
+        jsonReader: {
+            root: "dataRows",                // 数据行（默认为：rows）
+            page: "curPage",            // 当前页(服务器端返回)
+            total: "totalPages",    // 总页数
+            records: "totalRecords",    // 总记录数
+            id: "id",
+            repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
+        },
+        prmNames: {
+            rows: "page.pageSize",       //每页显示数理论上对应rowNum
+            page: "curPage",      //当前页（客户端提交）
+            sort: "page.orderBy",
+            order: "page.order",
+            search: "search"
+        },
+
+        pager: "#pageGrid"
+
+    });
+    $("#queryList").jqGrid('navGrid', '#pageGrid',
+            {del: true, add: false, edit: true},//options
+            { reloadAfterSubmit: false,
+                closeAfterEdit:true,
+                afterSubmit: function (response, postdata) {
+                    var res = $.parseJSON(response.responseText);
+                    if (res.res) {
+                        alert( "操作成功");
+                        return [true];
+                    } else {
+                        return [false, "操作失败,请联系维护人员检查原因"];
+                    }
+                }
+            }, // edit options
+            {}, // add options
+            {reloadAfterSubmit: false,
+                afterSubmit: function (response, postdata) {
+                    var res = $.parseJSON(response.responseText);
+                    if (res.res) {
+                        alert( "操作成功");
+                        return [true];
+                    } else {
+                        return [false, "操作失败,请联系维护人员检查原因"];
+                    }
+                }
+            }, // del options
+            {multipleSearch: true}); //search options
+//         ---------评价查询分割线-------------
+    $("#commonList").jqGrid({
+        url: 'commentAction.do',
+        datatype: "json",
+        autowidth: false,
+        shrinkToFit: true,
+        colNames: [ '学号', '近期表现', '老师评价', '评价时间'],
+        colModel: [
+            {name: 'stuNumber', index: 'stuNumber', width: '50%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
+                editable: true, editrules: {required: true, number: true}},
+            {name: 'behaviour', index: 'behaviour', width: '100%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
+                editable: true, edittype: 'textarea', editoptions: {rows: "5", cols: "20"}},
+            {name: 'evaluation', index: 'evaluation', width: '100%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
+                editable: true, edittype: 'textarea', editoptions: {rows: "5", cols: "20"}},
+            {name: 'CTime', index: 'CTime', width: '50%', formatter: 'date', formatoptions: {srcformat: "d-M-Y", newformat: "Y-m-d"},
+                searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}, editable: true, editrules: {required: true, date: true}}
+
+        ],
+        rowNum: 20,       //每页显示数
+        rowList: [20, 30, 50],
+        viewrecords: true,
+        editurl: 'commentOprAction.do',
+        jsonReader: {
+            root: "dataRows",                // 数据行（默认为：rows）
+            page: "curPage",            // 当前页(服务器端返回)
+            total: "totalPages",    // 总页数
+            records: "totalRecords",    // 总记录数
+            id: "id",
+            repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
+        },
+        prmNames: {
+            rows: "page.pageSize",       //每页显示数理论上对应rowNum
+            page: "curPage",      //当前页（客户端提交）
+            sort: "page.orderBy",
+            order: "page.order",
+            search: "search"
+        },
+        pager: "#commPageGrid"
+    });
+    $("#commonList").jqGrid('navGrid', '#commPageGrid',
+            {del: true, add: false, edit: true},
+            {reloadAfterSubmit: false,
+                closeAfterEdit:true,
+                afterSubmit: function (response, postdata) {
+                    var res = $.parseJSON(response.responseText);
+                    if (res.res) {
+                        alert( "操作成功");
+                        return [true];
+                    } else {
+                        return [false, "操作失败,请联系维护人员检查原因"];
+                    }
+                }},
+            {},
+            {reloadAfterSubmit: false,
+                afterSubmit: function (response, postdata) {
+                    var res = $.parseJSON(response.responseText);
+                    if (res.res) {
+                        return [true, "Ok"];
+                    } else {
+                        return [false, "操作失败,请联系维护人员检查原因"];
+                    }
+                }},
+            {multipleSearch: true});
+
+
+    doResize()
+});
+
+</script>
+<style>
+    body {
+        font: 70.5% "Trebuchet MS", sans-serif;
+    }
+
+    table {
+        font: 99% "Trebuchet MS", sans-serif;
+    }
+</style>
 </head>
 <body>
 <div id="tabs">
@@ -250,7 +273,7 @@
                     </td>
 
                     <td>
-                        <input type="submit" name="fileSub" value="导入"/>
+                        <input type="submit" name="fileSub" value="导入成绩"/>
                         <%--<button id="fileSub"></button>--%>
                     </td>
 
@@ -275,7 +298,7 @@
                     </td>
 
                     <td>
-                        <input type="submit" name="fileSub2" value="导入"/>
+                        <input type="submit" name="fileSub2" value="导入评语"/>
                         <%--<button id="fileSub"></button>--%>
                     </td>
 

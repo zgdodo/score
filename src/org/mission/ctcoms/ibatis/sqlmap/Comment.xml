@@ -27,8 +27,21 @@
         where ID = #id#
     </update>
 
+    <delete id="delCommentById" parameterClass="Long">
+        delete from comment where id =#id#
+    </delete>
+
+    <!--TODO need valid-->
     <select id="getSameComment" parameterClass="comment" resultMap="comMap">
         select * from comment where  S_NUMBER = #stuNumber# and C_TIME = #cTime#
+    </select>
+
+    <select id="getCommentList" parameterClass="String" resultMap="comMap">
+        $sql$
+    </select>
+
+    <select id="getCount" parameterClass="String" resultClass="Integer">
+        $sql$
     </select>
 
 </sqlMap>

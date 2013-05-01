@@ -17,7 +17,8 @@ import java.util.Map;
 public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
 
     /**
-     *   保存成绩
+     * 保存成绩
+     *
      * @param score
      * @return
      */
@@ -40,19 +41,21 @@ public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
 //    }
 
     /**
-     *  根据学号查询成绩
+     * 根据学号查询成绩
+     *
      * @param sNumber
      * @return
      * @throws Exception
      */
     @Override
     public List<Score> getScoreListByStuNum(String sNumber) throws Exception {
-        return loadObject("Score.findScore",sNumber);
+        return loadObject("Score.findScore", sNumber);
     }
 
     /**
-     *更新成绩
-     *@param score
+     * 更新成绩
+     *
+     * @param score
      * @return
      */
     @Override
@@ -67,39 +70,52 @@ public class ScoreDaoImpl extends BaseIbaitsDAO implements IScoreDao {
         return true;
     }
 
+    @Override
+    public boolean delScore(Long id) {
+        try {
+            delete("Score.delScoreById", id);  //To change body of implemented methods use File | Settings | File Templates.
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 查找重复记录
-     *@pram score
+     *
      * @return
      * @throws Exception
+     * @pram score
      */
     @Override
     public List<Score> getSameScore(Score score) throws Exception {
-        return loadList("Score.getSameScore",score);
+        return loadList("Score.getSameScore", score);
     }
 
     @Override
     public int getRecordCount(Score score) throws Exception {
-        int i = loadList("Score.getSameScore",score).size();
+        int i = loadList("Score.getSameScore", score).size();
         System.out.println(i);
         return i;
     }
 
     @Override
     public int getRecordCount(String sql) throws Exception {
-        return (Integer)loadObject("Score.getCount",sql);
+        return (Integer) loadObject("Score.getCount", sql);
     }
 
     /**
-     *  因jqgrid的查询太过复杂直接类里生成sql
+     * 因jqgrid的查询太过复杂直接类里生成sql
+     *
      * @return
      * @throws Exception
      */
     @Override
-    public List<Score> getScoreList(int curPage, int pageLimit,String sql) throws Exception {
-        int from = pageLimit*curPage -pageLimit;
-        String sqlString = sql+" limit "+ from +","+ pageLimit;
-        return loadList("Score.getScoreList",sqlString);
+    public List<Score> getScoreList(int curPage, int pageLimit, String sql) throws Exception {
+        int from = pageLimit * curPage - pageLimit;
+        String sqlString = sql + " limit " + from + "," + pageLimit;
+        return loadList("Score.getScoreList", sqlString);
     }
 
 

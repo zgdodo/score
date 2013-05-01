@@ -36,4 +36,6 @@ public interface ICommentService {
 
     boolean updateComment(Comment comment) throws Exception;
 
+    boolean delComent(String id) throws Exception;
+
 }

@@ -34,7 +34,13 @@
           scope="request">
         <property name="iScoreService" ref="scoreService"/>
     </bean>
-     <bean name="operationAction" class="org.mission.ctcoms.web.code.OperationAction" scope="request">
+     <bean name="operationAction" class="org.mission.ctcoms.web.action.storage.OperationAction" scope="request">
          <property name="iScoreService" ref="scoreService"/>
      </bean>
+    <bean name="commentAction" class="org.mission.ctcoms.web.action.storage.CommentAction" scope="request">
+        <property name="commentService" ref="commentService"/>
+    </bean>
+    <bean name="commentOprAction" class="org.mission.ctcoms.web.action.storage.CommentOpAction" scope="request">
+         <property name="commentService" ref="commentService"/>
+    </bean>
 </beans>

@@ -1,6 +1,7 @@
 package org.mission.ctcoms.business.storage.impl;
 
 import org.mission.ctcoms.business.storage.ICommentService;
+import org.mission.ctcoms.common.Common;
 import org.mission.ctcoms.dao.storage.ICommentDao;
 import org.mission.ctcoms.domain.Comment;
 import org.mission.ctcoms.web.code.JqGridSearchTo;
@@ -17,8 +18,8 @@ import java.util.Map;
  * Time: 下午3:01
  * To change this template use File | Settings | File Templates.
  */
-public class CommentServiceImpl implements ICommentService{
-    private ICommentDao commentDao ;
+public class CommentServiceImpl implements ICommentService {
+    private ICommentDao commentDao;
 
     public void setCommentDao(ICommentDao commentDao) {
         this.commentDao = commentDao;
@@ -36,7 +37,7 @@ public class CommentServiceImpl implements ICommentService{
         result.put("allSto", allStu);
         for (Comment comment : comments) {
             List<Comment> list = commentDao.getSameComment(comment);
-            if (list!=null&&list.size() > 0) {
+            if (list != null && list.size() > 0) {
                 comment.setId((list.get(0).getId()));
                 boolean flag = commentDao.updateComment(comment);
                 if (flag) {
@@ -65,11 +66,32 @@ public class CommentServiceImpl implements ICommentService{
 
     @Override
     public Map<String, Object> getCommentList(int curPage, int pageLimit, JqGridSearchTo jqGridSearchTo) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        String sqlCount = "select count(1) from comment";
+        String sql = "select * from comment";
+
+        Map<String, String> sqlMap = Common.generateSql(jqGridSearchTo, sql, sqlCount);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+
+        sqlCount = sqlMap.get("sqlCount");
+        sql = sqlMap.get("sql");
+
+        int totalSize = commentDao.getRecordCount(sqlCount);
+        List<Comment> sList = commentDao.getCommentList(curPage, pageLimit, sql);
+
+
+
+        resultMap.put("result", sList);
+        resultMap.put("totalSize", totalSize);
+        return resultMap;
     }
 
     @Override
     public boolean updateComment(Comment comment) throws Exception {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return commentDao.updateComment(comment);
+    }
+
+    @Override
+    public boolean delComent(String id) throws Exception {
+        return commentDao.delComment(Long.parseLong(id));
     }
 }
