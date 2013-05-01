@@ -136,20 +136,20 @@ public class ExcelCommon {
         return true;
     }
 
-    public static void main(String[] args) {
-        String filePath = "d:/期末考试.xls";
-        try {
-            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filePath));
-            Map<Integer, Map<Integer, List<String>>> map = getExcel(fs,1);
-            for(Map.Entry<Integer, List<String>> ent : map.get(0).entrySet()){
-                System.out.println(ent);
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        String filePath = "d:/期末考试.xls";
+//        try {
+//            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filePath));
+//            Map<Integer, Map<Integer, List<String>>> map = getExcel(fs,1);
+//            for(Map.Entry<Integer, List<String>> ent : map.get(0).entrySet()){
+//                System.out.println(ent);
+//            }
+//        } catch (FileNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 }

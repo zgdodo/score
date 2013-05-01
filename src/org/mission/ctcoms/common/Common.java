@@ -19,6 +19,7 @@ public class Common {
     /**
      * 转换Score对象成员变量到字段
      * param filed
+     *
      * @return
      */
     public static String fieldTransform(String filed) {
@@ -34,12 +35,12 @@ public class Common {
             return "CLASS_RANK";
         if (filed.equals("gradeRank"))
             return "GRADE_RANK";
-        if (filed.equals("cTime"))
+        if (filed.equals("cTime") || filed.equals("CTime"))
             return "C_TIME";
         return filed;
     }
 
-    public static   Map<String, String> generateSql(JqGridSearchTo jqGridSearchTo,String sql,String sqlCount) {
+    public static Map<String, String> generateSql(JqGridSearchTo jqGridSearchTo, String sql, String sqlCount) {
         Map<String, String> map = new HashMap<String, String>();
 
         //当用户是admin并且不是查询时才为空
@@ -58,7 +59,7 @@ public class Common {
 
         StringBuffer condition = new StringBuffer(" where ");
         //当用户不是admin时   where s_number= 'stuNumber'
-        if (jqGridSearchTo.getStuNumber()!=null&&!jqGridSearchTo.getStuNumber().equals("0001")) {
+        if (jqGridSearchTo.getStuNumber() != null && !jqGridSearchTo.getStuNumber().equals("0001")) {
             condition.append(" S_NUMBER='");
             condition.append(jqGridSearchTo.getStuNumber());
             condition.append("'");
@@ -95,17 +96,32 @@ public class Common {
         if (jqGridSearchDetailTo.getOp().equals("ne"))
             cond = "<>" + numbDate;
 
-        if (jqGridSearchDetailTo.getOp().equals("lt"))
-            cond = "<" + numbDate;
+        if (jqGridSearchDetailTo.getOp().equals("lt")) {
+            if (isDate(jqGridSearchDetailTo))
+                cond = "<" + stringData;
+            else
+                cond = "<" + numbDate;
+        }
+        if (jqGridSearchDetailTo.getOp().equals("le")){
+            if (isDate(jqGridSearchDetailTo))
+                cond = "<=" + stringData;
+            else
+                cond = "<=" + numbDate;
+        }
 
-        if (jqGridSearchDetailTo.getOp().equals("le"))
-            cond = "<=" + numbDate;
 
-        if (jqGridSearchDetailTo.getOp().equals("gt"))
-            cond = ">" + numbDate;
-
-        if (jqGridSearchDetailTo.getOp().equals("ge"))
-            cond = ">=" + numbDate;
+        if (jqGridSearchDetailTo.getOp().equals("gt")){
+            if (isDate(jqGridSearchDetailTo))
+                cond = ">" + stringData;
+            else
+                cond = ">" + numbDate;
+        }
+        if (jqGridSearchDetailTo.getOp().equals("ge")) {
+            if (isDate(jqGridSearchDetailTo))
+                cond = ">=" + stringData;
+            else
+                cond = ">=" + numbDate;
+        }
 
         if (jqGridSearchDetailTo.getOp().equals("bw"))
             cond = " like \'" + numbDate + "%\'";
@@ -129,6 +145,12 @@ public class Common {
                 jqGridSearchDetailTo.getField().equals("stuName"))
             return false;
         return true;
+    }
+
+    private static boolean isDate(JqGridSearchDetailTo jqGridSearchDetailTo) {
+        if (jqGridSearchDetailTo.getField().equals("CTime"))
+            return true;
+        return false;
     }
 
 }

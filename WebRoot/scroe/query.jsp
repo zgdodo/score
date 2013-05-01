@@ -79,6 +79,46 @@
         $("#queryList").jqGrid('navGrid', '#pageGrid',
                 {del: false, add: false, edit: false},
                 {}, {}, {}, {multipleSearch: true});
+        //         ---------评价查询分割线-------------
+        $("#commonList").jqGrid({
+            url: 'commentAction.do',
+            datatype: "json",
+            autowidth: false,
+            shrinkToFit: true,
+            colNames: [ '学号', '近期表现', '老师评价', '评价时间'],
+            colModel: [
+                {name: 'stuNumber', index: 'stuNumber', width: '50%',search:false},
+                {name: 'behaviour', index: 'behaviour', width: '100%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}
+                   },
+                {name: 'evaluation', index: 'evaluation', width: '100%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}
+                   },
+                {name: 'CTime', index: 'CTime', width: '50%', formatter: 'date', formatoptions: {srcformat: "Y-m-d", newformat: "Y-m-d"},
+                    searchoptions: {sopt: ['eq', 'lt', 'le', 'gt','ge']}}
+
+            ],
+            rowNum: 20,       //每页显示数
+            rowList: [20, 30, 50],
+            viewrecords: true,
+            jsonReader: {
+                root: "dataRows",                // 数据行（默认为：rows）
+                page: "curPage",            // 当前页(服务器端返回)
+                total: "totalPages",    // 总页数
+                records: "totalRecords",    // 总记录数
+                id: "id",
+                repeatitems: false                 // 设置成false，在后台设置值的时候，可以乱序。且并非每个值都得设
+            },
+            prmNames: {
+                rows: "page.pageSize",       //每页显示数理论上对应rowNum
+                page: "curPage",      //当前页（客户端提交）
+                sort: "page.orderBy",
+                order: "page.order",
+                search: "search"
+            },
+            pager: "#commPageGrid"
+        });
+        $("#commonList").jqGrid('navGrid', '#commPageGrid',
+                {del: false, add: false, edit: false},{},{},{},
+                {multipleSearch: true});
 
 
         doResize()
@@ -103,18 +143,8 @@
         <li><a href="#tabs-1">近期评语</a></li>
     </ul>
     <div id="tabs-1">
-        <form method="post" id="importForm">
-            <table>
-                <tr>
-                    <td>
-
-                    </td>
-
-                </tr>
-
-            </table>
-
-        </form>
+        <table id="commonList"></table>
+        <div id="commPageGrid"></div>
     </div>
     <div id="tabs-2">
 

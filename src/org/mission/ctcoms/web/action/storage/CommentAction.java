@@ -43,7 +43,7 @@ public class CommentAction extends JsonBaseAction<Comment> {
             jqGridSearchTo = (JqGridSearchTo) JSONObject.toBean(filt, JqGridSearchTo.class, m);
             jqGridSearchTo.setSearch(isSearch());
         }
-        //当不是按条件查询时，jqGridSearchTo可能为空，要构建一个 admin可查询所有记录故不放入
+        //当不是按条件查询时，jqGridSearchTo可能为空，要构建一个, admin可查询所有记录故不放入
         if (jqGridSearchTo == null && stuNumber != null && !stuNumber.equals("0001"))
         {
             jqGridSearchTo = new JqGridSearchTo();
@@ -60,21 +60,21 @@ public class CommentAction extends JsonBaseAction<Comment> {
 
     @Override
     public int getTotalPages() {
-        return this.totalPages;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.totalPages;
     }
 
     @Override
     public int getCurPage() {
-        return this.curPage;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.curPage;
     }
 
     @Override
     public int getTotalRecords() {
-        return this.totalRecords;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.totalRecords;
     }
 
     @Override
     public List getDataRows() {
-        return this.dataRows;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.dataRows;
     }
 }

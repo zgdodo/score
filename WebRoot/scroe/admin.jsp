@@ -21,13 +21,7 @@
 <script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <script src="/js/autosize.js" type="text/javascript"></script>
 <script>
-//        function doResize() {
-//            var ss = getPageSize();
-//            //将jqGrid窗口的宽度设置为ss.WinW-20，高度设置为ss.WinH-93
-//            //这里的20和93是真实宽高度的修正值，你可以自己去试一下找到最合适你的那个数值
-//            $("#queryList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
-//            $("#commonList").jqGrid('setGridWidth', ss.WinW - 70).jqGrid('setGridHeight', ss.WinH - 150);
-//        }
+
 $(document).ready(function () {
 
     $("#tabs").tabs();
@@ -189,9 +183,8 @@ $(document).ready(function () {
                 editable: true, edittype: 'textarea', editoptions: {rows: "5", cols: "20"}},
             {name: 'evaluation', index: 'evaluation', width: '100%', searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']},
                 editable: true, edittype: 'textarea', editoptions: {rows: "5", cols: "20"}},
-            {name: 'CTime', index: 'CTime', width: '50%', formatter: 'date', formatoptions: {srcformat: "d-M-Y", newformat: "Y-m-d"},
-                searchoptions: {sopt: ['eq', 'bw', 'ew', 'cn']}, editable: true, editrules: {required: true, date: true}}
-
+            {name: 'CTime', index: 'CTime', width: '50%', formatter: 'date', formatoptions: {srcformat: "Y-m-d", newformat: "Y-m-d"},
+                searchoptions: {sopt: ['eq', 'lt', 'le', 'gt','ge']}, editable: true, editrules: {required: true, date: true}}
         ],
         rowNum: 20,       //每页显示数
         rowList: [20, 30, 50],
@@ -232,7 +225,8 @@ $(document).ready(function () {
                 afterSubmit: function (response, postdata) {
                     var res = $.parseJSON(response.responseText);
                     if (res.res) {
-                        return [true, "Ok"];
+                        alert( "操作成功");
+                        return [true];
                     } else {
                         return [false, "操作失败,请联系维护人员检查原因"];
                     }

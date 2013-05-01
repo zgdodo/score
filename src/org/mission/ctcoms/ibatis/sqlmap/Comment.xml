@@ -18,7 +18,7 @@
     </insert>
 
     <update id="updateCommnet" parameterClass="comment">
-        Update commnet
+        Update comment
         set
              S_NUMBER=#stuNumber#,
              BEHAVIOUR=#behaviour#,
