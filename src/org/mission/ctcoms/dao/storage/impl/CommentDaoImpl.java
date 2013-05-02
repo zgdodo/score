@@ -55,7 +55,7 @@ public class CommentDaoImpl extends BaseIbaitsDAO implements ICommentDao {
 
     @Override
     public List<Comment> getSameComment(Comment comment) throws Exception {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return loadList("Comment.getSameComment",comment);
     }
 
     @Override
