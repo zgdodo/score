@@ -23,8 +23,12 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.mission.ctcoms.domain.Score;
 
 /**
@@ -73,9 +77,21 @@ public class ImportExcel<T> {
             // 将传入的File构造为FileInputStream;
             FileInputStream in = new FileInputStream(file);
             // // 得到工作表
-            HSSFWorkbook book = new HSSFWorkbook(in);
+            Workbook book=null;
+            try{
+            book = new HSSFWorkbook(in);
+            }   catch(OutOfMemoryError e) {
+                String msg = "The excel file " + file.getName()
+                        + " data is error, please delete invalid data!";
+             throw new Exception(msg);
+            }
+            catch(OfficeXmlFileException e) {
+                in = new FileInputStream(file);
+                book = new XSSFWorkbook(in);
+                //throw new Exception(e.getMessage());
+            }
             // // 得到第一页
-            HSSFSheet sheet = book.getSheetAt(0);
+            Sheet sheet = book.getSheetAt(0);
             // // 得到第一面的所有行
             Iterator<Row> row = sheet.rowIterator();
             int rows = sheet.getPhysicalNumberOfRows(); // 获得行数
@@ -112,7 +128,7 @@ public class ImportExcel<T> {
                 for (int j = 1; j < rows; j++) {     //行循环
                     // 标题下的第一行
 //                    Row rown = row.next();
-                    HSSFRow rown = sheet.getRow(j);
+                    Row rown = sheet.getRow(j);
 //                    Iterator<Cell> cellbody = rown.cellIterator();      // 行的所有列
                     int cells = rown.getLastCellNum();// 获得列数
 
@@ -122,7 +138,7 @@ public class ImportExcel<T> {
                     // 遍历一行的列
 //                    while (cellbody.hasNext()) {
                     for (int k = 0; k < cells; k++) {
-                        HSSFCell cell = rown.getCell(k);
+                        Cell cell = rown.getCell(k);
                         // 这里得到此列的对应的标题
                         String titleString = (String) titlemap.get(k);
 
